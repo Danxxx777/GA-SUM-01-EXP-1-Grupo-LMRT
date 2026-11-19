@@ -1,20 +1,35 @@
 % Bloque independiente. Sustituir los campos por evidencia de su proyecto.
 \bloque{\personaTres}
 \section{Java RMI}
-\begin{frame}{Java RMI}\relax
-{\large\bfseries El cliente invoca un método de un objeto en otra JVM. Comparte una interfaz Java y usa un stub que representa al objeto remoto.\par}
+\begin{frame}{Java RMI: invocar un objeto de otra JVM}\relax
+{\bfseries El cliente llama a un método como si fuera local, pero el código se ejecuta en otra JVM.\par}
 \medskip
-{\small Fuente de apoyo \cite{darbord2023}.}
-\guia{\campo{Explicar un concepto con sus palabras y relacionarlo con la demo.}}
+\centering
+\begin{tikzpicture}[font=\small]
+\node[nodo] (c) at (0,0) {Cliente (JVM 1)\\\textbf{stub}};
+\node[nodo] (s) at (9,0) {Servidor (JVM 2)\\\textbf{objeto remoto}};
+\node[nodo] (r) at (4.5,1.7) {Registro\\puerto 1099};
+\draw[enlace,-Stealth] (s)--node[above right,font=\footnotesize]{1. \texttt{rebind}}(r);
+\draw[enlace,-Stealth] (c)--node[above left,font=\footnotesize]{2. \texttt{lookup}}(r);
+\draw[enlace,-Stealth] (c)--node[below,font=\footnotesize]{3. llamada al método}(s);
+\end{tikzpicture}
+\par\smallskip
+\raggedright
+{\small La interfaz compartida extiende \texttt{Remote} y cada método declara \texttt{RemoteException}.}
+\guia{Citar fuente tras leer Darbord (¿trata RMI?).}
 \note{Completar el guion en notas/secciones/03-integrante-3.tex.}
 \end{frame}
 
-\begin{frame}{Ejemplo sencillo}\relax
-\textbf{Operación}\quad \campo{Conversor Celsius--Fahrenheit u otra operación RMI}\par
+\begin{frame}{Ejemplo: conversor Celsius a Fahrenheit}\relax
+\small
+\textbf{Contrato}\quad{\footnotesize\texttt{double aFahrenheit(double celsius) throws RemoteException}}\par
+\smallskip
+\textbf{Entrada}\quad 25 C \qquad \textbf{Salida}\quad 77.0 F\par
+\smallskip
+El cliente recibe un \textbf{stub} (\texttt{\$Proxy0}); la cuenta se hace en la JVM del servidor.\par
 \medskip
-\textbf{Entrada}\quad \campo{Dato de prueba}\par
-\textbf{Salida}\quad \campo{Resultado realmente obtenido}\par
-\guia{Mostrar interfaz Remote, registro por nombre, invocación del cliente y resultado.}
+\centering
+\includegraphics[width=.88\linewidth]{../evidencias/integrante-3/demo-rmi/01-demo-rmi.png}
 \end{frame}
 
 \begin{frame}{\proyectoTres · arquitectura propuesta}\relax

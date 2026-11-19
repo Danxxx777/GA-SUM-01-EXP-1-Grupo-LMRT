@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package revision;
+
+option java_multiple_files = true;
+option java_package = "ec.uteq.revision.grpc";
+
+// Servicio de turnos del Centro de Revisión Técnica Vehicular.
+// Un componente consulta a otro si un vehículo tiene turno asignado.
+service TurnosService {
+  rpc ConsultarTurno (ConsultaTurnoRequest) returns (ConsultaTurnoResponse);
+}
+
+// Petición: se identifica el vehículo por su placa.
+message ConsultaTurnoRequest {
+  string placa = 1;
+}
+
+// Respuesta: si tiene turno, la fecha y el estado del turno.
+message ConsultaTurnoResponse {
+  bool tiene_turno = 1;
+  string fecha = 2;
+  string estado = 3;
+}

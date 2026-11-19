@@ -46,3 +46,14 @@
 - **Pendiente.** Leer el artículo de Darbord (DOI 10.1109/MS.2023.3263019) y comprobar si trata RMI antes de citarlo: Crossref confirmó que el DOI existe y que título, autores, revista, volumen, páginas y año coinciden con el `.bib`, pero eso no dice nada de su contenido. Falta también el bosquejo a mano, el diagrama `.drawio`, las diapositivas 3 a 5, las notas y las capturas de lectura de mis fuentes.
 - **Asistencia utilizada.** Claude Sonnet 5.5 (Anthropic, mediante claude.ai y Claude Code). Se usó para leer el repositorio del SSDC y proponer el servicio candidato, escribir el código de la demo, corregir redacción del borrador de las diapositivas 1 y 2, revisar el estado de mi copia local y consultar a Crossref los metadatos de Darbord.
 - **Registro en Git.** [987c364](https://github.com/Danxxx777/GA-SUM-01-EXP-1-Grupo-LMRT/commit/987c364), «agrego la demo RMI del conversor de temperatura y la captura de su ejecución». [680f469](https://github.com/Danxxx777/GA-SUM-01-EXP-1-Grupo-LMRT/commit/680f469), «completo las diapositivas de teoría RMI y del ejemplo del conversor, y fijo SSDC como mi proyecto».
+
+
+## 2026-11-18 - Bloque 2 (gRPC): contrato del servicio de turnos
+
+- **Integrantes presentes.** Allison Mera Jumbo.
+- **Lo realizado.** Elegí mi Proyecto Fin de Curso, el sistema del Centro de Revisión Técnica Vehicular de Valencia, como proyecto de mi bloque. Agregué en `demo/integrante-2/turnos.proto` el contrato del ejemplo gRPC: el servicio `TurnosService` con la llamada `ConsultarTurno`, que recibe la placa de un vehículo y responde si tiene turno asignado, su fecha y su estado.
+- **Problemas resueltos.** La carpeta `demo/integrante-2/` estaba vacía y faltaba definir qué operación del proyecto serviría como ejemplo de una petición y una respuesta. Se eligió la consulta de turnos porque es una llamada simple entre dos componentes del sistema.
+- **Verificación realizada.** Revisé que el contrato siga la sintaxis de `proto3`, con un servicio, un mensaje de petición y uno de respuesta. La generación de código, el servidor, el cliente y su ejecución siguen pendientes.
+- **Pendiente.** Implementar el servidor y el cliente gRPC a partir del contrato, ejecutar la demo y capturar el resultado, preparar mis diapositivas y notas, y proponer la llamada entre componentes del proyecto.
+- **Asistencia utilizada.** Claude (Anthropic, mediante claude.ai). Se usó para redactar el contrato `.proto` inicial.
+- **Registro en Git.** [e7c4090](https://github.com/Danxxx777/GA-SUM-01-EXP-1-Grupo-LMRT/commit/e7c4090), «Agrega contrato .proto del servicio de turnos para el ejemplo gRPC».

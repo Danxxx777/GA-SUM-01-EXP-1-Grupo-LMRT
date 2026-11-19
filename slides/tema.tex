@@ -1,0 +1,61 @@
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usefonttheme{serif}
+\usepackage[spanish,es-nodecimaldot,es-notilde]{babel}
+\usepackage{tikz,booktabs,tabularx}
+\usetikzlibrary{positioning,arrows.meta}
+\usepackage[backend=biber,style=ieee]{biblatex}
+\addbibresource{../evidencias/capturas-fuentes/referencias.bib}
+
+\setbeameroption{hide notes}
+
+\newif\ifguias
+\guiastrue
+
+\definecolor{Tinta}{HTML}{19263D}
+\definecolor{Azul}{HTML}{345277}
+\definecolor{Cielo}{HTML}{D4E1EE}
+\definecolor{Bruma}{HTML}{E9F0F7}
+\definecolor{Gris}{HTML}{46556A}
+\definecolor{Pendiente}{HTML}{B3261E}
+\definecolor{Papel}{HTML}{F2F2F1}
+
+\setbeamercolor{normal text}{fg=Tinta,bg=white}
+\setbeamercolor{frametitle}{fg=Tinta}
+\setbeamercolor{structure}{fg=Azul}
+\setbeamercolor{pie}{fg=Gris,bg=Bruma}
+\setbeamercolor{guia}{fg=Pendiente,bg=Bruma}
+\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+\setbeamersize{text margin left=12mm,text margin right=12mm}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{frametitle}{%
+  \vspace*{4mm}
+  {\usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}\insertframetitle\par}
+  \vspace*{1.5mm}{\color{Cielo}\rule{\linewidth}{.75pt}}\par
+  \vspace*{1.5mm}}
+\setbeamertemplate{background}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \shade[left color=white,right color=Papel] (current page.south west)
+      rectangle (current page.north east);
+    \begin{scope}[shift={(current page.north east)}]
+      \shade[left color=Azul,right color=Tinta] (-1.55,0)--(0,0)--(0,-1.55)--cycle;
+      \foreach \x in {1.45,1.65,1.85}
+        \foreach \y in {.26,.46}
+          \fill[Azul!65] (-\x,-\y) circle (.026);
+    \end{scope}
+  \end{tikzpicture}}
+\setbeamertemplate{footline}{%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=2.8ex,dp=1.35ex,leftskip=12mm,rightskip=12mm]{pie}
+    \scriptsize LMRT \quad / \quad EXP-1 \hfill \turno \hfill \insertframenumber
+  \end{beamercolorbox}}
+\renewcommand{\arraystretch}{1.23}
+\newcommand{\turno}{}
+\newcommand{\bloque}[1]{\renewcommand{\turno}{#1}}
+\newcommand{\campo}[1]{\textcolor{Pendiente}{[#1]}}
+\newcommand{\guia}[1]{\ifguias\par\medskip
+  \begin{beamercolorbox}[wd=\linewidth,sep=1.05ex]{guia}
+    \small\textbf{Para completar}\quad #1
+  \end{beamercolorbox}\fi}
+\tikzset{nodo/.style={draw=Azul!45,fill=Bruma,rounded corners=1pt,
+  align=center,minimum width=3.1cm,minimum height=1cm},
+  enlace/.style={Stealth-Stealth,thick,draw=Azul}}

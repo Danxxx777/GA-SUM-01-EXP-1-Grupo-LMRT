@@ -28,3 +28,11 @@
 - **Lo realizado.** Se revisaron la actividad EXP-1, el encuadre y el sílabo de la asignatura. A petición de Byron, se retiró temporalmente el README y se reorganizó esta bitácora con los campos indicados en la actividad.
 - **Problemas resueltos.** La primera entrada carecía de campos explícitos para identificar a los integrantes presentes, el trabajo realizado y los problemas resueltos. Se incorporaron esos campos conservando la información comprobada de la sesión.
 - **Asistencia utilizada.** OpenAI Codex localizó las fuentes, cotejó las instrucciones y ayudó a reestructurar el registro.
+
+## 2026-11-18 - Fuentes del bloque RPC
+
+- **Integrantes presentes.** Belinda Toaquiza.
+- **Lo realizado.** Se organizo la bibliografia en referencias/referencias.bib y se descargaron PDF de acceso abierto para el bloque RPC.
+- **Problemas resueltos.** Se cotejaron las diferencias entre fecha de preprint, publicacion online y volumen final con Crossref, las editoriales y los manuscritos. Se actualizaron las rutas de compilacion.
+- **Verificacion realizada.** Tres articulos de revista con DOI de 2023 y 2025, un articulo de conferencia de apoyo y tres capturas con pasajes marcados para revision del equipo. La lectura personal y las notas del equipo quedan pendientes.
+- **Asistencia utilizada.** SciSpace para la busqueda y Codex para comprobar metadatos, descargar copias abiertas, organizar archivos y preparar las capturas. No se encontraron integraciones disponibles de Consensus ni Elicit.

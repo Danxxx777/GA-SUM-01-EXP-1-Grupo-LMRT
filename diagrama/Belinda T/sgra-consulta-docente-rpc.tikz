@@ -1,0 +1,35 @@
+% Diagrama propio de Belinda Toaquiza, derivado del bosquejo del 19-11-2026.
+% Vista de la consulta seleccionada; propuesta futura, no despliegue verificado.
+\begin{tikzpicture}[
+  x=1cm,y=1cm,
+  bloque/.style={draw=Azul!60,fill=Bruma,rounded corners=2pt,
+    align=center,text width=2.6cm,minimum height=1.08cm,inner sep=5pt,font=\fontsize{9}{10.5}\selectfont},
+  flujo/.style={-{Stealth[length=2mm]},thick,draw=Azul},
+  vuelta/.style={-{Stealth[length=2mm]},thick,draw=Gris},
+  rotulo/.style={font=\fontsize{7.5}{9}\selectfont,align=center,text=Tinta}
+]
+\node[bloque,text width=1.8cm] (angular) at (0,0) {\textbf{Angular}\\Estudiante};
+\node[bloque] (backend) at (3.7,0) {\textbf{Backend SGRA}\\Refuerzos\\Cliente JSON-RPC};
+\node[bloque] (academico) at (8.8,0) {\textbf{Servicio académico}\\Valida identidad\\Consulta JDBC};
+\draw[draw=Azul!65,dashed,rounded corners=3pt]
+  (2.12,-1.15) rectangle (5.28,1.05);
+\draw[draw=Azul!65,dashed,rounded corners=3pt]
+  (7.22,-1.15) rectangle (10.38,1.05);
+\node[rotulo,anchor=south] at (3.7,1.10) {Proceso del backend};
+\node[rotulo,anchor=south] at (8.8,1.10) {Proceso separado propuesto};
+\draw[flujo] ([yshift=2mm]angular.east) -- node[above,rotulo]{HTTP(S)} ([yshift=2mm]backend.west);
+\draw[vuelta] ([yshift=-2mm]backend.west) -- ([yshift=-2mm]angular.east);
+\node[rotulo,anchor=north] at (1.7,-.5) {Respuesta\\para la pantalla};
+\draw[flujo] ([yshift=2.5mm]backend.east) -- node[above,rotulo]{Usuario + asignatura} ([yshift=2.5mm]academico.west);
+\draw[vuelta] ([yshift=-2.5mm]academico.west) -- node[below,rotulo]{Docente o\\sin asignación} ([yshift=-2.5mm]backend.east);
+\node[rotulo,text=Azul,anchor=south] at (6.25,1.12) {\textbf{JSON-RPC 2.0}\\sobre HTTP(S)};
+\node[bloque,text width=2.6cm,minimum height=.7cm,fill=white] (bd) at (8.8,-2.25) {\textbf{PostgreSQL}\\Base existente};
+\draw[flujo] ([xshift=-3.5mm]academico.south) -- node[left,rotulo]{SQL / JDBC} ([xshift=-3.5mm]bd.north);
+\draw[vuelta] ([xshift=3.5mm]bd.north) -- node[right,rotulo]{Resultado} ([xshift=3.5mm]academico.south);
+\node[rotulo,anchor=north west,text width=6.8cm,align=left] at (-1.0,-1.5) {
+  \textbf{Operación propuesta}\\
+  \texttt{consultarDocenteAsignado}\\
+  Entrada: usuario autenticado y asignatura.\\
+  El contexto de identidad debe validarse entre servicios.
+};
+\end{tikzpicture}

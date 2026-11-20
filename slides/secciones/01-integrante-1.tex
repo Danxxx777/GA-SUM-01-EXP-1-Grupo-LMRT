@@ -1,12 +1,32 @@
 % Bloque independiente. Sustituir los campos por evidencia de su proyecto.
 \bloque{\personaUno}
 \section{RPC}
-\begin{frame}{RPC}\relax
-{\large\bfseries Un cliente invoca una operación en otro proceso mediante un contrato. El runtime prepara los argumentos y gestiona el intercambio.\par}
-\medskip
-{\small Fuente de apoyo \cite{seemakhupt2023,zhang2023rpc}.}
-\guia{\campo{Explicar un concepto con sus palabras y relacionarlo con la demo.}}
-\note{Completar el guion en notas/secciones/01-integrante-1.tex.}
+\begin{frame}{RPC: una operación en otro proceso}\relax
+{\normalsize Un cliente solicita la ejecución de un procedimiento en un servidor y recibe su resultado.\par}
+\vspace{1mm}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.46\textwidth}
+\textbf{Contrato compartido}\par
+{\small Operación, argumentos y respuesta. El \emph{stub} representa al servicio.\par}
+\vspace{1mm}
+\textbf{Serialización}\par
+{\small Convierte los datos en un mensaje; el receptor reconstruye sus valores.\par}
+\end{column}
+\begin{column}{.50\textwidth}
+\centering
+\begin{tikzpicture}[font=\small]
+\node[nodo,minimum width=4.8cm,minimum height=.75cm] (c) {Cliente y \emph{stub}};
+\node[nodo,minimum width=4.8cm,minimum height=.75cm,below=1.15cm of c] (s) {Servidor: ejecuta la operación};
+\draw[-{Stealth},thick,draw=Azul] ([xshift=-1.25cm]c.south) -- node[left,font=\scriptsize]{Petición} ([xshift=-1.25cm]s.north);
+\draw[-{Stealth},thick,draw=Azul] ([xshift=1.25cm]s.north) -- node[right,font=\scriptsize]{Respuesta} ([xshift=1.25cm]c.south);
+\end{tikzpicture}
+\end{column}
+\end{columns}
+\vspace{1mm}
+{\small\textbf{La red importa:} hay latencia y posibles fallos. El formato y el transporte dependen de la implementación.\par}
+\vspace{1.5mm}
+{\scriptsize Contrato y stub \cite{zhang2023rpc,arcuri2025evomaster}; procesamiento y latencia \cite{seemakhupt2023}.}
+\note{Explicar RPC como modelo de invocación remota. Recorrer contrato, stub, serialización, petición, ejecución y respuesta. Aclarar que RPC no exige HTTP/2 ni Protocol Buffers. La guía personal de teoría está en personal/belinda/README.md y se excluye localmente de Git.}
 \end{frame}
 
 \begin{frame}{Ejemplo sencillo}\relax
@@ -18,19 +38,15 @@
 \guia{Mostrar método, argumentos, respuesta y los procesos que intervienen.}
 \end{frame}
 
-\begin{frame}{\proyectoUno · arquitectura propuesta}\relax
-{\small\textbf{Actualmente}\quad \campo{Problema, usuarios, componentes y cifra con fuente o medición.}}
-\par\medskip
+\begin{frame}{SGRA: consulta académica como servicio remoto}\relax
+{\small\textbf{Propuesta futura:} convertir la consulta Java interna en una llamada a otro proceso.\par}
+\vspace{0mm}
 \centering
-\begin{tikzpicture}
-\node[nodo] (a) {Cliente\\{\campo{Componente actual}}};
-\node[nodo,right=3cm of a] (b) {Servicio propuesto\\{\campo{Operación remota}}};
-\draw[enlace] (a)--node[above,font=\small]{\campo{Protocolo y datos}}(b);
-\end{tikzpicture}
-\par\medskip
+\input{../diagrama/Belinda T/sgra-consulta-docente-rpc.tikz}
+\par\vspace{0mm}
 \raggedright
-{\small\textbf{Propuesta}\quad \campo{Qué se separaría y por qué la comunicación elegida aporta valor.}}
-\guia{Redibujar a partir de su bosquejo a mano. Marcar límites de proceso, red, datos y elementos que ya existen.}
+{\scriptsize\textbf{Supuesto:} base existente sin réplicas. \textbf{Base del análisis:} \href{https://github.com/KhrizGomez/back-SGRA/blob/e28bcfac58b92d44904939dbfd95ae9a75777c5b/src/main/java/com/CLMTZ/Backend/service/reinforcement/student/impl/StudentRequestServiceImpl.java\#L41}{código de SGRA}, revisado el 19-11-2026.}
+\note{Diagrama propio derivado del bosquejo de Belinda del 19-11-2026. En el flujo actual, el controlador y StudentRequestServiceImpl usan StudentCatalogService dentro del backend. La propuesta reemplaza esa dependencia por una llamada JSON-RPC a otro proceso. La identidad del usuario proviene del contexto autenticado; debe validarse entre servicios. PostgreSQL responde al servicio, no directamente al navegador. La separación conserva inicialmente la base existente como supuesto; no se infiere replicación ni una etiqueta CAP. La foto original queda en evidencias/Belinda T/esquema-mano/sgra-bosquejo-preliminar-consulta-docente-belinda-2026-11-19.jpeg.}
 \end{frame}
 
 \begin{frame}{Decisiones al distribuir el proyecto}\relax

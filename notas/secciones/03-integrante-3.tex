@@ -2,10 +2,25 @@
 \section*{\personaTres · Java RMI}
 \textbf{Proyecto}\quad \proyectoTres
 \subsection*{Teoría y ejemplo sencillo}
-\campo{Escribir lo que se dirá sobre Java RMI, el contrato, la entrada y la salida de la demo.}
+\textbf{Turno}\quad Expone \personaTres{} en el tercer turno.\par
+Java RMI permite que un programa Java llame a un método de un objeto que vive en otra JVM. El cliente escribe la llamada como si el objeto fuera local. \campo{Citar fuente de esta definición tras leerla.}\par
+El ejemplo es un conversor de temperatura en \texttt{demo/integrante-3/}. Tiene tres piezas:
+\begin{itemize}
+\item \texttt{ConversorRemoto} es el contrato: extiende \texttt{Remote} y declara \texttt{double aFahrenheit(double celsius) throws RemoteException}.
+\item \texttt{Servidor} implementa el contrato, exporta el objeto con \texttt{UnicastRemoteObject.exportObject}, crea el registro en el puerto 1099 y lo publica con el nombre \texttt{Conversor}.
+\item \texttt{Cliente} busca \texttt{Conversor} en el registro y llama al método.
+\end{itemize}
+Entrada: 25 C. Salida obtenida en mi ejecución: 77.0 F. El servidor imprimió \texttt{recibi 25.0 C, respondo 77.0 F}, así que la cuenta se hizo en su JVM. El cliente imprimió el tipo \texttt{jdk.proxy1.\$Proxy0}: lo que recibe es un stub, no el objeto real. La captura está en \texttt{evidencias/integrante-3/demo-rmi/01-demo-rmi.png}.
 \espacio
 \subsection*{Aplicación futura al proyecto}
-\campo{Explicar el estado actual y qué servicio se implementaría. Añadir la operación, motivación, transparencias, CAP/PACELC y comparación con fuentes.}
+\textbf{Estado actual del SSDC} (repositorio aldairHub/CHRSweb, commit \texttt{86a238b}). El backend es Java 21 con Spring Boot 4.0.2 (\texttt{backend/pom.xml}); el README indica Spring Boot 3.2 y Java 17, y tomo el \texttt{pom.xml} porque es lo que compila. El código de verificación por correo funciona así:
+\begin{itemize}
+\item \texttt{VerificacionController}, línea 23: \texttt{/api/verificacion/enviar} llama a \texttt{generarCodigo(correo)} de \texttt{CodigoVerificacionService}, que guarda el código en un \texttt{ConcurrentHashMap} (línea 17) con expiración de 10 minutos (línea 26).
+\item Línea 24: el mismo método llama a \texttt{EmailService.enviarCodigoVerificacion}, que guarda el código en un segundo mapa propio (\texttt{EmailService}, líneas 22 y 46) y lo envía por correo.
+\item Línea 39: \texttt{/api/verificacion/validar} consulta solo el mapa de \texttt{EmailService} (línea 63). El \texttt{validarCodigo} de \texttt{CodigoVerificacionService} (línea 32), el que revisa la expiración, no tiene ningún llamador.
+\end{itemize}
+Los dos mapas están en memoria de la JVM del backend. Eso es lo que se lee en el código; no lo he ejecutado.\par
+\textbf{Supuesto de diseño, no es el estado actual.} Si el backend corriera en dos instancias, un código generado en una no existiría en la otra. Candidato para exponer con RMI: una interfaz \texttt{VerificacionRemota} con \texttt{generarCodigo(String)} y \texttt{validarCodigo(String, String)}, cuyos argumentos y resultados (\texttt{String} y \texttt{boolean}) son serializables. \campo{Transparencias, CAP/PACELC y comparación con fuentes.}
 \espacio
 \subsection*{Fallo supuesto y conclusión}
 \campo{Describir causa, impacto, detección, recuperación propuesta y prueba de validación.}

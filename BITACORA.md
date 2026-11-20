@@ -2,7 +2,7 @@
 
 ## 2026-11-18 · Nueva plantilla por integrante
 
-- **Integrantes presentes.** La entrada original no registra quiénes asistieron.
+- **Integrantes presentes.** Belinda Toaquiza.
 
 - **Qué hice** — Preparé con asistencia de Codex una plantilla modular para teoría, demo y aplicación futura a los cuatro proyectos.
 - **Problema encontrado** — El material anterior estaba organizado alrededor de un solo sistema.
@@ -31,11 +31,13 @@
 
 ## 2026-11-18 - Fuentes del bloque RPC
 
-- **Integrantes presentes.** Belinda Toaquiza.
-- **Lo realizado.** Se organizo la bibliografia en referencias/referencias.bib y se descargaron PDF de acceso abierto para el bloque RPC.
-- **Problemas resueltos.** Se cotejaron las diferencias entre fecha de preprint, publicacion online y volumen final con Crossref, las editoriales y los manuscritos. Se actualizaron las rutas de compilacion.
-- **Verificacion realizada.** Tres articulos de revista con DOI de 2023 y 2025, un articulo de conferencia de apoyo y tres capturas con pasajes marcados para revision del equipo. La lectura personal y las notas del equipo quedan pendientes.
-- **Asistencia utilizada.** SciSpace para la busqueda y Codex para comprobar metadatos, descargar copias abiertas, organizar archivos y preparar las capturas. No se encontraron integraciones disponibles de Consensus ni Elicit.
+- **Integrantes presentes.** Belinda Betzabeth Toaquiza Zambrano.
+- **Modalidad.** Trabajo individual mediante esta sesión de chat, con asistencia de SciSpace y OpenAI Codex.
+- **Lo realizado.** Se organizó la bibliografía general en `referencias/referencias.bib`, se incorporaron tres artículos de revista para el bloque RPC y se guardaron cuatro PDF de acceso abierto en `referencias/PDFs/`. Se actualizaron las citas de las diapositivas y se prepararon tres capturas con pasajes subrayados, página y DOI.
+- **Problemas resueltos.** Se cotejaron las diferencias entre las fechas del preprint, la publicación online y el volumen final con Crossref, las editoriales y los manuscritos. Se actualizaron las rutas de compilación al mover el archivo bibliográfico.
+- **Verificación realizada.** Se comprobaron los DOI y los datos bibliográficos de tres artículos de revista de 2023 y 2025, junto con un artículo de conferencia de apoyo. Se compilaron las diapositivas y las notas. Las capturas incluyen marcas preparadas con IA; la lectura personal, la revisión de los pasajes y las anotaciones propias del equipo siguen pendientes.
+- **Asistencia utilizada.** SciSpace apoyó la búsqueda de fuentes. OpenAI Codex cotejó metadatos, descargó copias abiertas, organizó los archivos y preparó las capturas. No se encontraron integraciones disponibles de Consensus ni Elicit.
+- **Registro en Git.** [91680fd](https://github.com/Danxxx777/GA-SUM-01-EXP-1-Grupo-LMRT/commit/91680fd), «Agrega fuentes verificadas y evidencias del bloque RPC». El README de referencias se conservó únicamente en el equipo local, por indicación de Belinda.
 
 ## 2026-11-18 - Bloque 3 (Java RMI): demo y primeras diapositivas
 
@@ -75,3 +77,14 @@
 - **Problema encontrado** — No tenía Maven instalado, y IntelliJ no permitía crear carpetas normales dentro de `demo/` porque las marcaba como carpetas de código. Además, la compilación genera la carpeta `target/`, que el `.gitignore` del equipo no excluía.
 - **Solución y comprobación** — Usé el Maven incluido en IntelliJ y creé las carpetas escribiendo la ruta completa del archivo. Agregué `target/` al `.gitignore`. Comprobé la demo con el servidor encendido: `GSA-1234` respondió `CONFIRMADO`, `MBA-0567` respondió `PENDIENTE_PAGO` y `XYZ-999` respondió `SIN_TURNO`. Con el servidor apagado, el cliente recibió `UNAVAILABLE`. Las advertencias de `sun.misc.Unsafe` que aparecen en la consola se deben a Java 25 y no afectan la ejecución.
 - **Tiempo dedicado** — 45 min.
+
+## 2026-11-19 - Bloque 1 (RPC): teoría y propuesta de distribución de SGRA
+
+- **Integrantes presentes.** Belinda Betzabeth Toaquiza Zambrano.
+- **Modalidad.** Trabajo individual con asistencia de OpenAI Codex.
+- **Lo realizado.** Se completó la diapositiva de fundamentos de RPC: contrato, stub, serialización y recorrido de petición y respuesta. Se revisaron los repositorios `KhrizGomez/front-SGRA` y `KhrizGomez/back-SGRA` y se eligió la consulta del docente asignado a una asignatura del estudiante como operación candidata. Se elaboró a mano el bosquejo preliminar y añadió su fotografía. A partir de ese bosquejo se preparó el diagrama formal en TikZ, con versiones PDF y PNG, y se incorporó a las diapositivas. La fotografía original se incluyó en las notas. Las carpetas personales de demo, diagrama y evidencias se renombraron como `Belinda T` y la imagen recibió un nombre descriptivo.
+- **Problemas resueltos.** Se distinguió la llamada Java interna que existe actualmente de la propuesta futura de invocarla mediante JSON-RPC a un servicio académico en otro proceso. Se precisaron los límites de proceso, la identidad del usuario autenticado y el retorno de las respuestas a través del servicio y del backend. Se mantuvo la base PostgreSQL existente como supuesto inicial, sin asumir réplicas. Se corrigieron los desbordamientos y el espaciado del diagrama. Antes de publicar, se integraron los nuevos aportes del equipo y se recompiló el PDF de notas.
+- **Verificación realizada.** Se siguió en el código la consulta desde el frontend hasta el controlador, el servicio y el repositorio, y se identificó su uso en `StudentRequestServiceImpl.create`. Se compilaron la presentación, el diagrama independiente y las notas; se revisaron visualmente la diapositiva del diagrama y la página con el bosquejo. La revisión de SGRA fue estática: no se ejecutó el sistema ni se consultó su base de datos. Se comprobó que la guía personal estuviera excluida de Git y que los cambios de la bitácora y el README de referencias no formaran parte del commit publicado.
+- **Pendiente.** Implementar y ejecutar el ejemplo sencillo de JSON-RPC, registrar su salida real y completar el análisis de transparencias, CAP/PACELC, fallo hipotético, comparación y conclusiones. La separación del servicio académico sigue siendo una propuesta futura.
+- **Asistencia utilizada.** OpenAI Codex apoyó la explicación de la teoría a partir de las fuentes acordadas, la revisión del código de SGRA y la formalización del bosquejo en TikZ. También ayudó a organizar archivos, ajustar el diseño y compilar los documentos.
+- **Registro en Git.** [ad8f396](https://github.com/Danxxx777/GA-SUM-01-EXP-1-Grupo-LMRT/commit/ad8f396), «Completa teoría RPC y diagrama propuesto de SGRA para Belinda».

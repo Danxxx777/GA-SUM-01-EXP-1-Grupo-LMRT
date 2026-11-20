@@ -1,14 +1,64 @@
-% Notas del integrante 4. Compilar notas/main.tex.
+% Notas del integrante 4. Archivo incluido por notas/main.tex.
+% Completar los campos rojos solo con análisis y evidencias verificables.
 \section*{\personaCuatro · Llamadas y fallos de red}
 \textbf{Proyecto}\quad \proyectoCuatro
-\subsection*{Teoría y ejemplo sencillo}
-\campo{Escribir lo que se dirá sobre Llamadas y fallos de red, el contrato, la entrada y la salida de la demo.}
-\espacio
-\subsection*{Aplicación futura al proyecto}
-\campo{Explicar el estado actual y qué servicio se implementaría. Añadir la operación, motivación, transparencias, CAP/PACELC y comparación con fuentes.}
-\espacio
-\subsection*{Fallo supuesto y conclusión}
-\campo{Describir causa, impacto, detección, recuperación propuesta y prueba de validación.}
-\espacio
-\textbf{Bosquejo a mano}\quad
-\campo{Insertar la foto de evidencias/integrante-4/esquema-mano, con nombres y fecha visibles.}
+
+\subsection*{1. Conceptos y explicación}
+\textbf{Llamada bloqueante.}\quad
+\campo{Explicar con palabras propias qué espera el hilo cliente y vincularlo con send().}
+
+\textbf{Llamada no bloqueante.}\quad
+\campo{Explicar sendAsync(), el futuro y por qué join() espera al final.}
+
+\textbf{Fallos de comunicación.}\quad
+\campo{Distinguir timeout, conexión fallida y respuesta HTTP 503.}
+
+\subsection*{2. Demostración Java}
+\textbf{Archivos.}\quad \texttt{demo/opcion4/Cliente.java} y
+\texttt{demo/opcion4/Servidor.java}.
+
+\textbf{Entrada y operación.}\quad
+\campo{Anotar modo, URL y ruta del ejemplo utilizados en la ejecución real.}
+
+\textbf{Salida observada.}\quad
+\campo{Insertar valores y mensajes obtenidos, fecha y referencia a la evidencia.}
+
+\textbf{Interpretación.}\quad
+\campo{Contrastar el orden de mensajes en cada modo y explicar el resultado.}
+
+\subsection*{3. Aplicación al PFC CLAB}
+\textbf{Estado actual.}\quad
+\campo{Describir solo los componentes existentes y su comunicación según el código.}
+
+\textbf{Operación entre servicios.}\quad
+\campo{Precisar la solicitud de Reservas a Laboratorios y el dato devuelto.}
+
+\textbf{Propuesta y límites.}\quad
+\campo{Separar lo implementado de las mejoras futuras y justificar su utilidad.}
+
+\subsection*{4. Decisiones distribuidas}
+\textbf{Transparencias.}\quad
+\campo{Identificar una transparencia observable y una limitación concreta.}
+
+\textbf{CAP y PACELC.}\quad
+\campo{Definir primero topología, posibles réplicas y fallo de red; no atribuir garantías no probadas.}
+
+\textbf{Fuentes.}\quad
+\campo{Relacionar cada afirmación técnica con una fuente comprobada de referencias/referencias.bib.}
+
+\subsection*{5. Fallo, recuperación y conclusión}
+\textbf{Escenario hipotético.}\quad
+\campo{Indicar el componente afectado, causa y consecuencia sin presentarlo como prueba ejecutada.}
+
+\textbf{Validación.}\quad
+\campo{Describir cómo se comprobaría la detección y la recuperación, y añadir el resultado solo tras ejecutar.}
+
+\textbf{Conclusión personal.}\quad
+\campo{Indicar qué enseña el caso sobre la comunicación entre procesos y qué falta desarrollar.}
+
+\subsection*{6. Evidencias y bosquejo}
+\textbf{Bosquejo a mano.}\quad
+\campo{Incluir la imagen de evidencias/integrante-4/esquema-mano cuando exista, con nombres y fecha.}
+
+\textbf{Capturas.}\quad
+\campo{Referenciar capturas auténticas del ensayo y anotarlas en la bitácora.}

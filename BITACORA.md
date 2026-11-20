@@ -66,3 +66,12 @@
 - **Problemas resueltos.** El bosquejo a mano se pospone para el 20-nov.
 - **Verificación realizada.** Una compilación de prueba de las notas, con un sustituto del paquete de español, mostró el texto dentro de los márgenes.
 - **Asistencia utilizada.** Claude Sonnet 5.5 (Anthropic) redactó el borrador de esta sección a partir del código del SSDC y de mi ejecución de la demo.
+
+### 2026-11-19 · Mera Jumbo Allison
+
+- **Integrantes presentes** — Allison Mera.
+- **Commit(s)** — [e84755b](https://github.com/Danxxx777/GA-SUM-01-EXP-1-Grupo-LMRT/commit/e84755b) — «Agrega servidor y cliente gRPC del servicio de turnos con proyecto Maven»; [3c73c76](https://github.com/Danxxx777/GA-SUM-01-EXP-1-Grupo-LMRT/commit/3c73c76) — «Agrega capturas de la demo gRPC con los tres casos y el fallo UNAVAILABLE».
+- **Qué se hizo** — Implementé con asistencia de Claude la demo gRPC de mi bloque como proyecto Maven en `demo/integrante-2/`. Moví el contrato a `src/main/proto/turnos.proto`. `ServidorTurnos` representa al servicio de Turnos y Pagos de mi proyecto y `ClienteTurnos` al de Inspecciones, que consulta por placa si un vehículo tiene turno antes de la revisión. Ejecuté cuatro pruebas y guardé las capturas en `evidencias/integrante-2/demo-grpc/`.
+- **Problema encontrado** — No tenía Maven instalado, y IntelliJ no permitía crear carpetas normales dentro de `demo/` porque las marcaba como carpetas de código. Además, la compilación genera la carpeta `target/`, que el `.gitignore` del equipo no excluía.
+- **Solución y comprobación** — Usé el Maven incluido en IntelliJ y creé las carpetas escribiendo la ruta completa del archivo. Agregué `target/` al `.gitignore`. Comprobé la demo con el servidor encendido: `GSA-1234` respondió `CONFIRMADO`, `MBA-0567` respondió `PENDIENTE_PAGO` y `XYZ-999` respondió `SIN_TURNO`. Con el servidor apagado, el cliente recibió `UNAVAILABLE`. Las advertencias de `sun.misc.Unsafe` que aparecen en la consola se deben a Java 25 y no afectan la ejecución.
+- **Tiempo dedicado** — 45 min.

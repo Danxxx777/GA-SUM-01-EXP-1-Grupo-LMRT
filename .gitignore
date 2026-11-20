@@ -11,6 +11,7 @@
 *.vrb
 
 build/
+target/
 *.class
 .idea/
 *.iml

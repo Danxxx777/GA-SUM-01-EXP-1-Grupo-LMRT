@@ -57,3 +57,12 @@
 - **Pendiente.** Implementar el servidor y el cliente gRPC a partir del contrato, ejecutar la demo y capturar el resultado, preparar mis diapositivas y notas, y proponer la llamada entre componentes del proyecto.
 - **Asistencia utilizada.** Claude (Anthropic, mediante claude.ai). Se usó para redactar el contrato `.proto` inicial.
 - **Registro en Git.** [e7c4090](https://github.com/Danxxx777/GA-SUM-01-EXP-1-Grupo-LMRT/commit/e7c4090), «Agrega contrato .proto del servicio de turnos para el ejemplo gRPC».
+
+## 2026-11-19 - Notas del bloque 3: teoría, ejemplo y estado actual
+
+- **Integrantes presentes.** Eduardo Reinoso Vélez.
+- **Modalidad.** Trabajo individual en una sesión de chat con Claude (Anthropic).
+- **Lo realizado.** En `notas/secciones/03-integrante-3.tex` quedaron la teoría de RMI, la descripción del ejemplo del conversor con su entrada y su salida, y el estado actual del SSDC con referencias a archivos y líneas de `CodigoVerificacionService`, `VerificacionController` y `EmailService`. Los apartados de transparencias, CAP y PACELC, fallo supuesto y bosquejo a mano siguen pendientes.
+- **Problemas resueltos.** El bosquejo a mano se pospone para el 20-nov.
+- **Verificación realizada.** Una compilación de prueba de las notas, con un sustituto del paquete de español, mostró el texto dentro de los márgenes.
+- **Asistencia utilizada.** Claude Sonnet 5.5 (Anthropic) redactó el borrador de esta sección a partir del código del SSDC y de mi ejecución de la demo.

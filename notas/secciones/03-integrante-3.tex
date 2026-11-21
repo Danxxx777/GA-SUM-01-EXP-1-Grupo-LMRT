@@ -1,38 +1,24 @@
 % Notas del integrante 3. Compilar notas/main.tex.
 \section*{\personaTres · Java RMI}
-\textbf{Proyecto}\quad \proyectoTres
+\small
+\textbf{Proyecto}\quad \proyectoTres\par
 \subsection*{Teoría y ejemplo sencillo}
-\textbf{Turno}\quad Expone \personaTres{} en el tercer turno.\par
-Java RMI permite que un programa Java llame a un método de un objeto que vive en otra JVM. El cliente escribe la llamada como si el objeto fuera local. Fuente: documentación de Oracle sobre Java RMI para Java SE 17.\par
-El ejemplo es un conversor de temperatura en \texttt{demo/integrante-3/}. Tiene tres piezas:
-\begin{itemize}
-\item \texttt{ConversorRemoto} es el contrato: extiende \texttt{Remote} y declara \texttt{double aFahrenheit(double celsius) throws RemoteException}.
-\item \texttt{Servidor} implementa el contrato, exporta el objeto con \texttt{UnicastRemoteObject.exportObject}, crea el registro en el puerto 1099 y lo publica con el nombre \texttt{Conversor}.
-\item \texttt{Cliente} busca \texttt{Conversor} en el registro y llama al método.
-\end{itemize}
-Entrada: 25 C. Salida obtenida en mi ejecución: 77.0 F. El servidor imprimió \texttt{recibi 25.0 C, respondo 77.0 F}, así que la cuenta se hizo en su JVM. El cliente imprimió el tipo \texttt{jdk.proxy1.\$Proxy0}: lo que recibe es un stub, no el objeto real. La captura está en \texttt{evidencias/integrante-3/demo-rmi/01-demo-rmi.png}.
-\espacio
+Java RMI permite que un programa Java llame a un método de un objeto que vive en otra JVM, escribiendo la llamada como si fuera local (fuente: documentación de Oracle sobre Java RMI, Java SE 21). El ejemplo, en \texttt{demo/integrante-3/}, es un conversor de temperatura: \texttt{ConversorRemoto} es el contrato (extiende \texttt{Remote}), \texttt{Servidor} exporta el objeto y lo publica como \texttt{Conversor} en el registro del puerto 1099, y \texttt{Cliente} busca ese nombre y llama al método. Entrada 25 C, salida 77.0 F en mi ejecución. El servidor imprimió \texttt{recibi 25.0 C, respondo 77.0 F}, así que la cuenta se hizo en su JVM, y el cliente recibió un tipo \texttt{jdk.proxy1.\$Proxy0}: un stub, no el objeto real.
 \subsection*{Aplicación futura al proyecto}
-\textbf{Estado actual del SSDC} (repositorio aldairHub/CHRSweb, commit \texttt{86a238b}). El backend es Java 21 con Spring Boot 4.0.2 (\texttt{backend/pom.xml}); el README indica Spring Boot 3.2 y Java 17, y tomo el \texttt{pom.xml} porque es lo que compila. El código de verificación por correo funciona así:
-\begin{itemize}
-\item \texttt{VerificacionController}, línea 23: \texttt{/api/verificacion/enviar} llama a \texttt{generarCodigo(correo)} de \texttt{CodigoVerificacionService}, que guarda el código en un \texttt{ConcurrentHashMap} (línea 17) con expiración de 10 minutos (línea 26).
-\item Línea 24: el mismo método llama a \texttt{EmailService.enviarCodigoVerificacion}, que guarda el código en un segundo mapa propio (\texttt{EmailService}, líneas 22 y 46) y lo envía por correo.
-\item Línea 39: \texttt{/api/verificacion/validar} consulta solo el mapa de \texttt{EmailService} (línea 63). El \texttt{validarCodigo} de \texttt{CodigoVerificacionService} (línea 32), el que revisa la expiración, no tiene ningún llamador.
-\end{itemize}
-Los dos mapas están en memoria de la JVM del backend. Eso es lo que se lee en el código; no lo he ejecutado.\par
-\textbf{Supuesto de diseño, no es el estado actual.} Si el backend corriera en dos instancias, un código generado en una no existiría en la otra. Candidato para exponer con RMI: una interfaz \texttt{VerificacionRemota} con \texttt{generarCodigo(String)} y \texttt{validarCodigo(String, String)}, cuyos argumentos y resultados (\texttt{String} y \texttt{boolean}) son serializables. \par
-\textbf{Comunicación.} Las dos operaciones irían por RMI con llamada bloqueante: el backend espera la respuesta o una \texttt{RemoteException}. RMI solo sirve entre programas Java, y aquí ambos extremos lo serían.\par
-\textbf{Transparencias.} Ofrecida: de acceso, porque el backend escribe la llamada igual que una local. Limitada: la de fallos. Si el servicio no responde, el usuario vería el error 500 que \texttt{VerificacionController} ya devuelve ante cualquier excepción (líneas 28 a 31).\par
-\textbf{CAP.} Con una sola instancia y sin réplicas no hay partición entre copias, así que no asigno etiqueta. Si hubiera dos réplicas y se cortara el enlace entre ellas, elegiría consistencia: rechazar el código antes que aceptar uno que la otra réplica no conoce.\par
-\textbf{PACELC.} Con la red sana y una sola instancia no hay disyuntiva entre latencia y consistencia, pero cada llamada remota suma latencia de red frente a la local. No la he medido. La mediría con N llamadas del cliente del ejemplo y su promedio.
-\espacio
+\textbf{Estado actual} (aldairHub/CHRSweb, commit \texttt{86a238b}; Java 21 y Spring Boot 4.0.2 según \texttt{backend/pom.xml}). El código de verificación por correo guarda cada código en dos \texttt{ConcurrentHashMap} en memoria: el de \texttt{CodigoVerificacionService} (línea 17, con expiración de 10 minutos en la 26) y el de \texttt{EmailService} (líneas 22 y 46). \texttt{/api/verificacion/validar} consulta solo el de \texttt{EmailService} (\texttt{VerificacionController} línea 39, \texttt{EmailService} línea 63), así que la expiración nunca se aplica, y el \texttt{validarCodigo} de \texttt{CodigoVerificacionService} (línea 32) no tiene llamadores. Esto lo leí en el código; no lo ejecuté.\par
+\textbf{Supuesto de diseño, no es el estado actual.} Con dos instancias del backend, un código generado en una no existiría en la otra. Candidato para RMI: una interfaz \texttt{VerificacionRemota} con \texttt{generarCodigo(String)} y \texttt{validarCodigo(String, String)}, de argumentos serializables. La llamada sería bloqueante. Transparencia ofrecida: de acceso. Limitada: de fallos; el usuario vería el error 500 de \texttt{VerificacionController} (líneas 28 a 31).\par
+\textbf{CAP.} Hoy no hay réplicas, solo dos mapas en el mismo backend, así que el teorema no aplica. Con dos instancias y la red cortada priorizaría la consistencia: rechazar un código antes que aceptar uno que la otra instancia desconoce, aunque algunos usuarios no puedan verificarse durante el corte.\par
+\textbf{PACELC.} Con una instancia y la red sana no hay compromiso entre latencia y consistencia, pero con RMI cada llamada cruza la red. No lo he medido; lo mediría repitiendo N veces la llamada del cliente del conversor y promediando.
 \subsection*{Fallo supuesto y conclusión}
-\textbf{Escenario supuesto.} El servicio remoto se reinicia entre \texttt{generarCodigo} y \texttt{validarCodigo}.\par
-\textbf{Causa raíz.} Síntoma: un código correcto se rechaza. Causa inmediata: el mapa quedó vacío. Causa raíz: el código solo vive en la memoria del proceso (\texttt{ConcurrentHashMap}, línea 17 de \texttt{CodigoVerificacionService}).\par
-\textbf{Impacto, detección y recuperación.} El usuario no puede completar la verificación y debe pedir otro código. El backend lo detecta por la \texttt{RemoteException}. Propongo un reintento acotado y, si persiste, pedir un código nuevo.\par
-\textbf{Comparación.} Un almacén externo como Redis guarda la clave con tiempo de vida y la borra al vencer, según su documentación del comando \texttt{EXPIRE}. El compromiso es operar un servicio más a cambio de que el estado no dependa del proceso del backend.\par
-\textbf{Conclusión.} Lo primero que haría es unir los dos mapas en uno con expiración, que corrige el defecto actual sin RMI. RMI solo tendría sentido si hubiera varias instancias que compartir. Prueba de validación: generar un código, esperar más de 10 minutos y validarlo; debe rechazarlo. No la he realizado.
-\espacio
-\textbf{Bosquejo a mano}\par\smallskip
+\textbf{Escenario.} El servicio remoto se reinicia después de generar un código y antes de que el usuario lo ingrese. Síntoma: se rechaza un código correcto. Causa inmediata: el mapa quedó vacío. Causa raíz: el código solo existe en la memoria del proceso (\texttt{ConcurrentHashMap}, línea 17). Hay dos casos: si el backend usa el stub previo al reinicio, recibe una \texttt{RemoteException}, y como el código se perdió debe pedir uno nuevo, no reintentar; si hace un nuevo \texttt{lookup}, la llamada devuelve \texttt{false} sin error y el backend no detecta el reinicio. Ninguno de los dos casos está probado.\par
+\textbf{Comparación.} Redis guarda la clave con tiempo de vida y la borra al vencer, según la documentación de \texttt{EXPIRE}, a cambio de operar un servicio más.\par
+\textbf{Conclusión.} Antes de RMI, unificaría los dos mapas en uno con expiración, que corrige el defecto de hoy sin cambiar la arquitectura; RMI solo se justifica con varias instancias. La prueba sería generar un código, esperar más de 10 minutos y validarlo, y debe rechazarlo. Todavía no la he realizado, porque el arreglo aún no está implementado y el sistema no está distribuido.\par
+\textbf{Uso de inteligencia artificial.} Usé Claude Sonnet 5.5 (Anthropic, claude.ai). Redactó el borrador de las diapositivas 3 a 5 y de estas notas, escribió el código del ejemplo del conversor, buscó las fuentes de Oracle y Redis, comprobó las líneas citadas contra el commit \texttt{86a238b}, pasó mi bosquejo a TikZ y resumió estas notas. Yo dibujé el bosquejo a mano, ejecuté el ejemplo y tomé la captura, y reescribí CAP, PACELC y el fallo supuesto a partir de su borrador.\par\smallskip
+\clearpage
+\textbf{Anexo: por qué cito documentación técnica}\par\smallskip
+Dos de mis fuentes no son artículos de revista: la guía de Java RMI de Oracle, versión 21 (septiembre de 2023, la versión de Java que usa el backend del SSDC), y la página del comando \texttt{EXPIRE} de Redis, vigente al 20 de noviembre de 2026. Respaldan dos afirmaciones puntuales: cómo funciona RMI y que Redis borra la clave al vencer. Busqué, con ayuda de Claude, artículos de revista con DOI de los últimos 5 años sobre esos dos puntos y no encontré ninguno que pudiera verificar. Los artículos con DOI del equipo sostienen el resto del trabajo.\par\bigskip
+\begin{minipage}{\linewidth}
+\textbf{Anexo: bosquejo a mano}\par\smallskip
 \includegraphics[height=.26\textheight,keepaspectratio]{../evidencias/integrante-3/esquema-mano/esquema-mano-ssdc-rmi-2026-11-20.jpg}\par
-{\small Bosquejo original de \personaTres, 20 de noviembre de 2026. Vista parcial del SSDC: solo el flujo de verificación; lo punteado grueso es supuesto y no está implementado.}
+{\footnotesize Bosquejo original de \personaTres, 20 de noviembre de 2026. Vista parcial del SSDC: solo el flujo de verificación; lo punteado grueso es supuesto y no está implementado.}
+\end{minipage}

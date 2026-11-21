@@ -1,4 +1,3 @@
-% Bloque independiente. Sustituir los campos por evidencia de su proyecto.
 \bloque{\personaTres}
 \section{Java RMI}
 \begin{frame}{Java RMI: invocar un objeto de otra JVM}\relax
@@ -16,8 +15,7 @@
 \par\smallskip
 \raggedright
 {\small La interfaz compartida extiende \texttt{Remote} y cada método declara \texttt{RemoteException}.}
-{\footnotesize Fuente: \cite{oraclermi17}.}
-\note{Completar el guion en notas/secciones/03-integrante-3.tex.}
+{\footnotesize Fuente: \cite{oraclermi21}.}
 \end{frame}
 
 \begin{frame}{Ejemplo: conversor Celsius a Fahrenheit}\relax
@@ -55,7 +53,7 @@ PACELC & Red sana: sin disyuntiva con una instancia, pero cada llamada suma late
 \small
 \textbf{Escenario}\quad El servicio remoto se reinicia entre generar y validar el código.\par\smallskip
 \textbf{Causa raíz}\quad El código solo vive en memoria (\texttt{ConcurrentHashMap}, línea 17).\par\smallskip
-\textbf{Respuesta}\quad \texttt{RemoteException}, reintento acotado, pedir código nuevo.\par\smallskip
+\textbf{Respuesta}\quad Stub previo: \texttt{RemoteException}, pedir código nuevo. Nuevo \texttt{lookup}: \texttt{false} sin error, no se detecta.\par\smallskip
 \textbf{Comparación}\quad Redis guarda la clave con tiempo de vida y la borra al vencer \cite{redisexpire}. Compromiso: un servicio más que operar.\par\smallskip
 \textbf{Lección}\quad Unir los dos mapas en uno con expiración, sin RMI. Prueba pendiente: esperar más de 10 minutos y validar.\par
 \end{frame}

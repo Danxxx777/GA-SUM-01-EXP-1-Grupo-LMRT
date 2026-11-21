@@ -1,0 +1,26 @@
+% Diagrama propio de Eduardo Reinoso Vélez, derivado del bosquejo a mano del 20-11-2026.
+% Vista parcial del SSDC: solo el flujo de verificación por correo. Lo punteado grueso es supuesto, no implementado.
+\begin{tikzpicture}[
+  x=1cm,y=1cm,
+  bloque/.style={draw=Azul!60,fill=Bruma,rounded corners=2pt,
+    align=center,text width=2.5cm,minimum height=1.05cm,inner sep=4pt,font=\fontsize{9}{10.5}\selectfont},
+  flujo/.style={-{Stealth[length=2mm]},thick,draw=Azul},
+  rotulo/.style={font=\fontsize{7.5}{9}\selectfont,align=center,text=Tinta}
+]
+\node[bloque] (front) at (0,0) {\textbf{Frontend Angular}\\\texttt{registro.ts}};
+\node[bloque] (back) at (4.4,0) {\textbf{Backend}\\Spring Boot\\stub RMI};
+\node[bloque,fill=white] (reg) at (9.5,.95) {\textbf{Registro RMI}\\puerto 1099};
+\node[bloque,fill=white] (ver) at (9.5,-.95) {\textbf{Verificación remota}\\servidor RMI};
+\node[bloque,fill=white] (smtp) at (4.4,-2.35) {\textbf{Servidor SMTP}\\Gmail};
+\draw[draw=Azul!65,dashed,rounded corners=3pt] (-1.5,-.9) rectangle (1.5,.9);
+\node[rotulo,anchor=south] at (0,.93) {Navegador};
+\draw[draw=Azul!65,dashed,rounded corners=3pt] (2.7,-.9) rectangle (6.1,.9);
+\node[rotulo,anchor=south] at (4.4,.93) {JVM del backend};
+\draw[draw=Pendiente!80,dash pattern=on 4pt off 2pt,very thick,rounded corners=3pt] (7.85,-1.75) rectangle (11.15,1.85);
+\node[rotulo,anchor=south,text=Pendiente] at (9.5,1.88) {\textbf{Supuesto, no implementado}\\JVM remota};
+\draw[flujo] (front.east) -- node[above,rotulo]{HTTP POST} (back.west);
+\draw[flujo] ([yshift=2mm]back.east) -- node[above=1pt,rotulo,sloped,pos=.5]{lookup} (reg.west);
+\draw[flujo] ([yshift=-2mm]back.east) -- node[below=3pt,rotulo,sloped,pos=.6]{llamada al método} (ver.west);
+\draw[flujo] (back.south) -- node[right,rotulo]{SMTP} (smtp.north);
+\node[rotulo,anchor=north] at (9.5,-1.8) {Genera y valida códigos};
+\end{tikzpicture}

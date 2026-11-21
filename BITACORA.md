@@ -88,3 +88,12 @@
 - **Pendiente.** Implementar y ejecutar el ejemplo sencillo de JSON-RPC, registrar su salida real y completar el análisis de transparencias, CAP/PACELC, fallo hipotético, comparación y conclusiones. La separación del servicio académico sigue siendo una propuesta futura.
 - **Asistencia utilizada.** OpenAI Codex apoyó la explicación de la teoría a partir de las fuentes acordadas, la revisión del código de SGRA y la formalización del bosquejo en TikZ. También ayudó a organizar archivos, ajustar el diseño y compilar los documentos.
 - **Registro en Git.** [ad8f396](https://github.com/Danxxx777/GA-SUM-01-EXP-1-Grupo-LMRT/commit/ad8f396), «Completa teoría RPC y diagrama propuesto de SGRA para Belinda».
+
+## 2026-11-20 - Bosquejo, diagrama, diapositivas 3 a 5, notas y fuentes del bloque 3
+
+- **Integrantes presentes.** Eduardo Reinoso Vélez.
+- **Lo realizado.** En `slides/secciones/03-integrante-3.tex` quedaron la diapositiva de decisiones (comunicación, transparencias, CAP y PACELC, todo marcado como supuesto) y la del fallo hipotético con su causa raíz, la comparación y la lección. En `notas/secciones/03-integrante-3.tex` quedó el desarrollo completo de esos apartados. Agregué a `referencias/referencias.bib` dos fuentes: la documentación de Oracle sobre Java RMI (Java SE 17) y la documentación de Redis del comando `EXPIRE`. La diapositiva 1 ahora cita la de Oracle. Dibujé a mano el bosquejo del flujo de verificación del SSDC, con mi nombre y la fecha, y su foto está en `evidencias/integrante-3/esquema-mano/`. A partir de él se hicieron el diagrama en TikZ (`diagrama/integrante-3/ssdc-verificacion-rmi.tikz` y `.tex`) y la diapositiva 3, y la foto quedó enlazada en las notas.
+- **Problemas resueltos.** Las dos diapositivas nuevas se desbordaban por abajo y tenían demasiado texto, así que se resumieron y el detalle quedó en las notas.
+- **Verificación realizada.** Una compilación de prueba, con sustitutos de `biblatex` y de `babel` en español, mostró el diagrama y las diapositivas 3, 4 y 5 dentro de la página.
+- **Asistencia utilizada.** Claude Sonnet 5.5 (Anthropic) corrigió el borrador realizado por mi para estas diapositivas y notas, buscó en la web las dos fuentes, y pasó mi bosquejo a TikZ para el diagrama y la diapositiva 3.
+

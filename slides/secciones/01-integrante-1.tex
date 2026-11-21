@@ -61,10 +61,11 @@
 \end{frame}
 
 \begin{frame}{SGRA: consulta académica como servicio remoto}\relax
-{\small\textbf{Propuesta futura:} convertir la consulta Java interna en una llamada a otro proceso.\par}
+{\footnotesize SGRA gestiona solicitudes de refuerzo entre estudiantes y docentes.\\
+\textbf{Propuesta futura:} separar la consulta del docente en un servicio académico.\par}
 \vspace{0mm}
 \centering
-\input{../diagrama/Belinda T/sgra-consulta-docente-rpc.tikz}
+\scalebox{.92}{\input{../diagrama/Belinda T/sgra-consulta-docente-rpc.tikz}}
 \par\vspace{0mm}
 \raggedright
 {\scriptsize\textbf{Supuesto:} base existente sin réplicas. \textbf{Base del análisis:} \href{https://github.com/KhrizGomez/back-SGRA/blob/e28bcfac58b92d44904939dbfd95ae9a75777c5b/src/main/java/com/CLMTZ/Backend/service/reinforcement/student/impl/StudentRequestServiceImpl.java\#L41}{código de SGRA}, revisado el 19-11-2026.}
@@ -77,7 +78,7 @@
 \begin{columns}[T,onlytextwidth]
 \begin{column}{.47\textwidth}
 \textbf{Comunicación}\par
-{\small JSON-RPC sobre HTTPS, petición--respuesta. El flujo espera al docente antes de crear la solicitud.\par}
+{\small Cliente--servidor; JSON-RPC/HTTPS. Consulta síncrona antes del alta.\par}
 \medskip
 \textbf{Transparencias}\par
 {\small\textbf{Ubicación:} Angular conserva su API; el backend localiza el servicio.\\
@@ -111,7 +112,7 @@ Sin réplicas: L/C no evaluado.\par}
 \end{column}
 \begin{column}{.49\textwidth}
 \textbf{Comparación · Moodle + Scheduler}\par
-{\small Integra citas en Moodle. SGRA propone la consulta en otro proceso: despliegue separado, con comunicación y operación adicionales \cite{moodle2025scheduler}.\par}
+{\small Organiza citas docente--estudiante en Moodle. SGRA gestiona solicitudes de refuerzo: separar la consulta facilita reutilizarla, pero añade operación y red \cite{moodle2025scheduler}.\par}
 \medskip
 \textbf{Lección y conclusión}\par
 {\small Validar identidad y trazas en esta lectura. Probar corte y recuperación antes de distribuir más funciones.\par}

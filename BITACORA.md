@@ -128,3 +128,12 @@
 - **Problema encontrado** — Al compilar en TeXstudio se sobrescribía `slides/main.pdf` y aparecía el archivo temporal `main.synctex.gz`. Además, al subir el bosquejo, GitHub rechazó el push porque otra integrante había subido cambios al mismo tiempo.
 - **Solución y comprobación** — Dejé fuera del commit `main.pdf` y `main.synctex.gz` para no generar conflictos con el PDF del equipo. Integré los cambios remotos con un merge desde IntelliJ y volví a empujar. Compilé `slides/main.tex` y comprobé que mis diapositivas 7 y 8 se vieran sin campos pendientes.
 - **Tiempo dedicado** — 40 min.
+
+### 2026-11-20 · Mera Jumbo Allison
+
+- **Integrantes presentes** — Allison Mera.
+- **Commit(s)** — [9e6f847](https://github.com/Danxxx777/GA-SUM-01-EXP-1-Grupo-LMRT/commit/9e6f847) — «Completa diapositivas de arquitectura, decisiones y fallo del RTV con diagrama, notas y referencias».
+- **Qué se hizo** — Completé con asistencia de Claude mis tres últimas diapositivas a partir del informe de mi Proyecto Fin de Curso (RTV): la arquitectura propuesta con el diagrama TikZ `diagrama/integrante-2/rtv-autorizacion-grpc.tikz`, derivado de mi bosquejo a mano; las decisiones de comunicación, transparencias, CAP y PACELC; y el fallo hipotético de una respuesta perdida tras guardar la autorización. Escribí mi sección de notas con el bosquejo como anexo, agregué tres referencias (informe del PFC, guía de *deadlines* de gRPC y documentación de idempotencia de Stripe), puse el nombre del proyecto en `slides/equipo.tex` y actualicé mi fila de aportes y mi declaración de uso de IA en `notas/main.tex`.
+- **Problema encontrado** — El prototipo del PFC usa REST, no gRPC, por lo que la propuesta debía presentarse como supuesto. Al hacer el push hubo un conflicto en `notas/main.tex`, porque otra integrante había modificado el mismo párrafo de uso de IA. Además, TeXstudio no compilaba al ejecutar directamente el archivo `.tikz`.
+- **Solución y comprobación** — Marqué en el diagrama y en las notas que la llamada gRPC es un supuesto y que hoy es REST. Resolví el conflicto en IntelliJ conservando la versión de mi compañera y añadiendo mi declaración al final del párrafo. Compilé `slides/main.tex` y `notas/main.tex` en lugar de los archivos parciales, y comprobé que no hubiera errores y que las notas se mantuvieran en cuatro páginas.
+- **Tiempo dedicado** — 40 min.

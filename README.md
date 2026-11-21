@@ -47,7 +47,7 @@ El ensayo debe mostrar rostro y voz de todos los integrantes. Antes de entregar,
 
 Cada integrante edita su sección en slides/secciones/ y notas/secciones/. El estilo de las diapositivas está en slides/tema.tex; los nombres y proyectos se definen en slides/equipo.tex.
 
-El [modelo digital del esquema de CLAB](diagrama/integrante-4/clab-consulta-http.png) sirve de referencia para el dibujo manual de Byron. La foto auténtica se añadirá en evidencias/integrante-4/esquema-mano/; el modelo no se presenta como fotografía de un bosquejo original.
+El [modelo digital del esquema de CLAB](diagrama/integrante-4/clab-consulta-http.png) se conserva junto a la [fotografía original del esquema manuscrito de revisión de Byron](evidencias/integrante-4/esquema-mano/clab-consulta-bosquejo.png), fechada el 21-11-2026 e incluida en las notas.
 
 La declaración **general** de uso de IA está al final de notas/main.tex, después de la tabla de aportes y antes de las referencias. Las contribuciones y comprobaciones se describen también en la bitácora.
 
@@ -102,7 +102,7 @@ Las referencias se mantienen generales y al final. Ambos documentos cargan refer
 - [x] Integrar los cuatro bloques, completar el cierre y ocultar las guías de edición.
 - [ ] Completar los usos de IA que aún no se hayan declarado.
 - [x] Recompilar los PDF integrados y comprobar las notas en cuatro páginas.
-- [ ] Incorporar la fotografía auténtica del esquema manuscrito de revisión de Byron, con nombre y fecha real, y volver a revisar el PDF.
+- [x] Incorporar la fotografía auténtica del esquema manuscrito de revisión de Byron, con nombre y fecha real, y volver a revisar el PDF.
 - [ ] Confirmar la entrega previa de FORM-MC-01 y FORM-AC-01 en el SGA.
 - [ ] Confirmar el registro del tema y que no repita el sistema del TA-IND-01 de un integrante, conforme al encuadre acordado con el docente.
 - [ ] Formular una pregunta crítica a otro equipo. **Pregunta propuesta:** si el cliente agota su tiempo de espera después de que el servidor guarda una operación, ¿cómo evitan duplicarla al reintentar y con qué prueba lo comprueban?

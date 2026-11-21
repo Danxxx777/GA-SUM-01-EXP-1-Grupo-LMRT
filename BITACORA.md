@@ -169,3 +169,11 @@
 - **Asistencia utilizada.** Codex realizó la migración, la síntesis del bloque de Byron, el cierre, los ajustes de maquetación y las compilaciones. Las salidas de ejecución siguen siendo las aportadas por Byron el 20 de noviembre. No se atribuyen nuevas pruebas de los sistemas ni lectura personal de fuentes a esta sesión.
 - **Pendientes reales.** Foto manual de Byron, ensayo completo con rostro y voz de todos y su enlace abierto en el README, comprobación de las condiciones de entrega y confirmación del caso o alcance acordado por el equipo.
 - **Ajuste posterior solicitado.** Se retiró el candidato de GitHub del documento de apoyo y de la bibliografía, porque Byron indicó que el equipo podría haber establecido otro caso. La presentación integrada mantiene la prueba controlada de Laboratorios y Reservas de CLAB. Se resumió la declaración de IA con redacción impersonal, conservando los tipos de asistencia efectivamente utilizados y la distinción de las ejecuciones personales.
+
+## 2026-11-21 - Fotografía del esquema y preparación del ensayo
+
+- **Integrantes presentes.** Byron Daniel Loor Mendoza, mediante esta sesión de chat.
+- **Aporte recibido.** Byron entregó la fotografía de su dibujo de CLAB, con nombre y fecha 21-11-2026 visibles. Se guardó en evidencias/integrante-4/esquema-mano/clab-consulta-bosquejo.png y se comprobó que la copia coincide con el archivo original mediante SHA-256. La imagen no se retocó; su giro para lectura se aplica únicamente al incluirla en LaTeX.
+- **Integración.** Se enlazó la foto como esquema manuscrito de revisión, realizado después del diagrama digital y de las pruebas. No se presenta como un primer borrador previo al desarrollo.
+- **Preparación del video.** A petición de Byron, Codex preparó en el chat un guion orientativo de unos tres minutos sobre las cinco diapositivas del bloque. El guion distingue los resultados registrados el día 20, el estado actual y las propuestas futuras. Todavía no se recibió el video ni se comprobó su duración.
+- **Comprobación documental.** Se recompilaron y revisaron visualmente las notas con la fotografía incluida. El documento conserva cuatro páginas, sin citas indefinidas ni desbordamientos en el registro de compilación.

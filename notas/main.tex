@@ -1,32 +1,47 @@
-\documentclass[11pt,a4paper]{article}
+\documentclass[10pt,a4paper]{article}
 \usepackage[T1]{fontenc}
 \usepackage[spanish]{babel}
-\usepackage[margin=22mm]{geometry}
+\usepackage[margin=20mm]{geometry}
 \usepackage{mathptmx,graphicx,tabularx,booktabs,xcolor}
+\usepackage[obeyspaces]{url}
 \usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=ieee,maxbibnames=3]{biblatex}
+\addbibresource{../referencias/referencias.bib}
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{.5em}
+\setlength{\parskip}{.28em}
+\setlength{\emergencystretch}{2em}
+\widowpenalty=10000
+\clubpenalty=10000
 \definecolor{Pendiente}{HTML}{B3261E}
 \newcommand{\campo}[1]{\textcolor{Pendiente}{[#1]}}
 \input{../slides/equipo}
-\newcommand{\espacio}{\par\rule{\linewidth}{.3pt}\par\vspace{5mm}}
+\newcommand{\espacio}{\par\rule{\linewidth}{.3pt}\par\vspace{1mm}}
+\makeatletter
+\renewcommand\section{\@startsection{section}{1}{0pt}{1.1ex plus .3ex}{.6ex}{\large\bfseries}}
+\renewcommand\subsection{\@startsection{subsection}{2}{0pt}{.9ex plus .2ex}{.4ex}{\normalsize\bfseries}}
+\makeatother
+\setlength{\bibitemsep}{.2em}
 \begin{document}
-\input{secciones/01-integrante-1}
-\newpage
-\input{secciones/02-integrante-2}
-\newpage
-\input{secciones/03-integrante-3}
-\newpage
-\input{secciones/04-integrante-4}
+{\Large\bfseries Notas de la presentación · Equipo LMRT\par}
+{\small RPC, gRPC, Java RMI y comunicación entre procesos · EXP-1\par}
+\begingroup\input{secciones/Belinda T}\endgroup
+\begingroup\input{secciones/02-integrante-2}\endgroup
+\begingroup\input{secciones/03-integrante-3}\endgroup
+\begingroup\input{secciones/04-integrante-4}\endgroup
+
 \section*{Aportes del equipo}
-\small
-\begin{tabularx}{\linewidth}{lX}
+{\small
+\begin{tabularx}{\linewidth}{@{}p{.19\linewidth}X@{}}
 \toprule Integrante & Aporte concreto y evidencia\\\midrule
-\personaUno & \campo{Completar}\\
-\personaDos & \campo{Completar}\\
-\personaTres & Java RMI: ejemplo del conversor (\texttt{demo/integrante-3/}), bosquejo a mano del flujo de verificación del SSDC, diagrama en TikZ, diapositivas 12 a 16 y notas (página 3 y anexo).\\
-\personaCuatro & \campo{Completar}\\\bottomrule
+\personaUno & Teoría RPC, demo JSON-RPC y capturas personales, bosquejo de SGRA, diagrama TikZ, diapositivas y notas. Archivos en las carpetas \path{Belinda T/} de demo, diagrama y evidencias.\\
+\personaDos & Contrato, servidor y cliente gRPC de consulta de turnos; capturas de ejecución. Código en \path{demo/integrante-2/} y evidencias en \path{evidencias/integrante-2/demo-grpc/}.\\
+\personaTres & Conversor RMI, bosquejo del flujo de verificación del SSDC, diagrama TikZ, diapositivas y notas. Código en \path{demo/integrante-3/}; esquema y capturas en sus evidencias.\\
+\personaCuatro & Armazón de demo Java de llamadas y fallos de red en \path{demo/opcion4/}, aplicación propuesta a CLAB y plantilla de notas por completar.\\\bottomrule
 \end{tabularx}
+}
+
 \section*{Uso de inteligencia artificial}
-Se utilizó inteligencia artificial como apoyo para la búsqueda de fuentes y para formalizar la redacción de las diapositivas y la plantilla. \personaTres{} usó Claude Sonnet 5.5 (Anthropic) para redactar el borrador de sus diapositivas y notas, escribir el código del ejemplo del conversor, buscar fuentes, comprobar las líneas de código citadas y pasar su bosquejo a TikZ; el detalle está en su sección y en la bitácora. \campo{Completar con los demás usos efectivos.}
+Se utilizaron OpenAI Codex y Claude Sonnet 5.5 (Anthropic) como apoyo para buscar y contrastar fuentes, formalizar la redacción de diapositivas y notas, preparar la plantilla, escribir código inicial de las demos, revisar archivos y líneas citadas, pasar bosquejos a TikZ y ajustar y compilar documentos. SciSpace apoyó la búsqueda académica. Los usos y comprobaciones de cada aporte se detallan en la bitácora. Los bosquejos manuscritos y las ejecuciones personales se identifican por sus evidencias; las pruebas automatizadas se distinguen de ellas. La asistencia no sustituye la lectura, revisión y explicación del equipo. \campo{Completar los usos efectivos aún no declarados por los demás integrantes.}
+
+\printbibliography[title={Referencias}]
 \end{document}

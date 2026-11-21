@@ -41,3 +41,27 @@ El integrante ejecuta los casos y conserva las salidas originales. A partir del 
 Las diapositivas se editan en `slides/secciones/04-integrante-4.tex` y las notas en `notas/secciones/04-integrante-4.tex`. La bibliografía es `referencias/referencias.bib`. El diagrama editable está en `diagrama/integrante-4/` y las transcripciones de las pruebas en `evidencias/integrante-4/demo-http/`. La bitácora es la general del repositorio.
 
 Los comandos y dependencias para compilar `slides/main.tex` y `notas/main.tex` están en el README general. La demo sigue en `demo/opcion4/` y requiere Java 17 o superior.
+
+## Aplicación oral y demostración en CLAB
+
+Las diapositivas presentan un sistema distribuido supuesto con Cliente, Servicio A y Servicio B. Durante la explicación, A se relaciona con Reservas y B con Laboratorios. Los comandos siguientes permiten mostrar esa aplicación al proyecto; no se proyectan como descripción de la arquitectura genérica.
+
+Con los JAR compilados, ejecutar cada servicio en una terminal distinta desde la raíz de clab-pfc-7a:
+
+```powershell
+java -jar src/servicio-laboratorios/target/servicio-laboratorios-0.0.1-SNAPSHOT.jar
+```
+
+```powershell
+java -jar src/servicio-reservas/target/servicio-reservas-0.0.1-SNAPSHOT.jar
+```
+
+Esperar el mensaje Started de ambas aplicaciones. En la terminal del cliente, desde el repositorio de la exposición:
+
+```powershell
+$urlClab = 'http://127.0.0.1:8082/api/reservas/comunicacion'
+java -cp build opcion4.Cliente bloqueante $urlClab
+java -cp build opcion4.Cliente no-bloqueante $urlClab
+```
+
+Con ambos servicios activos se espera HTTP 200. Al detener Laboratorios en su terminal se espera HTTP 503 desde Reservas. Después de reiniciar Laboratorios y esperar su arranque, repetir la consulta permite comprobar la recuperación. Detener Reservas produce un fallo de conexión del cliente. El retardo de cinco segundos del puerto 8083 se conserva como ejemplo complementario de timeout.

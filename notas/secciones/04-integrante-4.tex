@@ -3,13 +3,13 @@
 \small
 \textbf{Proyecto:} CLAB, gestión de laboratorios y reservas. El esqueleto tiene dos servicios de consulta, sin reservas persistidas ni replicadas \cite{clabEsqueleto2026}.
 
-\subsection*{Teoría y ejemplo sencillo}
+\subsection*{Modelo supuesto y demostración sencilla}
 \texttt{send()} bloquea al hilo. \texttt{sendAsync()} devuelve un futuro; el \texttt{join()} final sí espera \cite{java17httpclient}. Los límites son 2 s para conectar y 3 s para la petición. Un timeout no prueba cancelación del servidor. Es distinto de conexión rechazada o HTTP 503.
 
-Byron ejecutó ambos modos el 20-11-2026. Las primeras respuestas normales fueron HTTP 200 en 149/77 ms (bloqueante/no bloqueante). El retardo de 5 s produjo timeout en 3021/3027 ms. Con el servidor detenido obtuvo conexión fallida en 52/61 ms; al reiniciarlo, una nueva consulta bloqueante obtuvo 200 en 159 ms. Son observaciones individuales, no una comparación de rendimiento.
+Las diapositivas muestran un modelo supuesto: el cliente pide un dato a A y A consulta a B. La demo sencilla utiliza dos procesos locales, con respuesta normal y retardo de 5 s en el puerto 8083. Se compara la espera del cliente y el agotamiento del plazo. Las salidas individuales no son una comparación de rendimiento. La relación con el PFC se explica oralmente.
 
-\subsection*{Aplicación y decisiones}
-Reservas (8082) recibe \path{/api/reservas/comunicacion} y consulta \path{/api/laboratorios/info} en Laboratorios (8081), con HTTP/JSON y \texttt{RestClient} bloqueante. Son procesos separados en una máquina. La API oculta las clases internas, pero las direcciones y los fallos siguen visibles.
+\subsection*{Aplicación oral al PFC y decisiones}
+Para relacionar el modelo con CLAB, A sería Reservas (8082) y B sería Laboratorios (8081). Reservas recibe \path{/api/reservas/comunicacion} y consulta \path{/api/laboratorios/info}, con HTTP/JSON y \texttt{RestClient} bloqueante. Ese flujo ya se probó en una máquina. La API oculta las clases internas, pero las direcciones y los fallos siguen visibles.
 
 \textbf{Propuesta, no implementada:} futuras réplicas aisladas no confirmarían horarios sin acuerdo con la autoridad de escritura. Se priorizaría consistencia de confirmación sobre disponibilidad durante una partición. Con red sana, mantener datos consistentes cuesta coordinación y latencia. Detener un proceso no prueba esas garantías ni una partición \cite{ahmed2023consistency}.
 

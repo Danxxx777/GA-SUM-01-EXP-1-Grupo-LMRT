@@ -177,3 +177,11 @@
 - **Integración.** Se enlazó la foto como esquema manuscrito de revisión, realizado después del diagrama digital y de las pruebas. No se presenta como un primer borrador previo al desarrollo.
 - **Preparación del video.** A petición de Byron, Codex preparó en el chat un guion orientativo de unos tres minutos sobre las cinco diapositivas del bloque. El guion distingue los resultados registrados el día 20, el estado actual y las propuestas futuras. Todavía no se recibió el video ni se comprobó su duración.
 - **Comprobación documental.** Se recompilaron y revisaron visualmente las notas con la fotografía incluida. El documento conserva cuatro páginas, sin citas indefinidas ni desbordamientos en el registro de compilación.
+
+## 2026-11-21 - Modelo supuesto y aplicación oral al PFC
+
+- **Integrantes presentes.** Byron Daniel Loor Mendoza, mediante esta sesión de chat.
+- **Solicitud.** Byron precisó que las diapositivas deben explicar un sistema distribuido supuesto y que la aplicación a su proyecto se realizará oralmente, dentro del guion de cada diapositiva.
+- **Lo realizado.** Se mantuvieron cinco diapositivas sobre llamadas, demo sencilla, topología Cliente-A-B, decisiones y fallo de dependencia. Se añadió un TikZ del modelo genérico. CLAB, sus rutas y sus puertos quedaron en las notas orales y en el documento de apoyo, separados del modelo proyectado. El bosquejo manuscrito de CLAB se conserva como evidencia de la aplicación al PFC.
+- **Alcance y asistencia.** Codex realizó la edición y preparó el guion explicativo. No ejecutó la demostración personal ni añadió mediciones. En el guion se diferencian el flujo de consulta probado, la recuperación manual y las propuestas futuras de reservas replicadas.
+- **Verificación documental.** Se recompilaron ambos PDF y se revisó visualmente el bloque. Las cinco diapositivas mantienen los números 17 a 21 y no muestran nombres ni rutas de CLAB. Las notas conservan cuatro páginas, la aplicación oral al PFC y la fotografía original. Se comprobaron los bloques PowerShell mediante análisis de sintaxis, sin ejecutar el experimento del estudiante.

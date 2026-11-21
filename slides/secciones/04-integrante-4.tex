@@ -1,55 +1,64 @@
-% Bloque independiente. Sustituir los campos por evidencia de su proyecto.
+% Bloque 4: comunicación HTTP y ensayo personal de CLAB.
 \bloque{\personaCuatro}
 \section{Llamadas y fallos de red}
-\begin{frame}{Llamadas y fallos de red}\relax
-{\large\bfseries Una llamada bloqueante espera la respuesta. Una API no bloqueante permite continuar al hilo cliente. El plazo de espera delimita cuánto esperar.\par}
+\begin{frame}{Bloqueo y espera del cliente}\relax
+\begin{itemize}
+  \item \textbf{\texttt{send()}} mantiene esperando al hilo que llama hasta recibir la respuesta o un error.
+  \item \textbf{\texttt{sendAsync()}} devuelve un futuro. El hilo puede continuar y procesar después la respuesta.
+  \item \textbf{\texttt{join()}} espera al final de esta demo para mostrar el resultado antes de cerrar la consola.
+\end{itemize}
 \medskip
-{\small Fuente de apoyo \cite{kazanavicius2023,rozek2026}.}
-\guia{\campo{Explicar un concepto con sus palabras y relacionarlo con la demo.}}
-\note{Completar el guion en notas/secciones/04-integrante-4.tex.}
+{\small Ambos modos necesitan manejar errores y tiempos de espera. \cite{java17httpclient,java17httprequest}}
+\note{Señalar qué hace el hilo que inicia la petición. El futuro representa una respuesta que todavía puede estar pendiente. En nuestra consola aparece el mensaje de continuación antes del resultado. join sí espera y está colocado al final.}
 \end{frame}
 
 \begin{frame}{Ejemplo sencillo}\relax
-\textbf{Operación}\quad \campo{Una llamada RPC/gRPC/RMI con respuesta y un fallo controlado}\par
+\small
+\textbf{Operación}\quad Petición HTTP GET al servidor Java local, puerto 8083.
 \medskip
-\textbf{Entrada}\quad \campo{Dato de prueba}\par
-\textbf{Salida}\quad \campo{Resultado realmente obtenido}\par
-\guia{Declarar la tecnología elegida y mostrar qué recibe el cliente cuando el servicio falla.}
-\end{frame}
-
-\begin{frame}{\proyectoCuatro · arquitectura propuesta}\relax
-{\small\textbf{Actualmente}\quad \campo{Problema, usuarios, componentes y cifra con fuente o medición.}}
-\par\medskip
-\centering
-\begin{tikzpicture}
-\node[nodo] (a) {Cliente\\{\campo{Componente actual}}};
-\node[nodo,right=3cm of a] (b) {Servicio propuesto\\{\campo{Operación remota}}};
-\draw[enlace] (a)--node[above,font=\small]{\campo{Protocolo y datos}}(b);
-\end{tikzpicture}
-\par\medskip
-\raggedright
-{\small\textbf{Propuesta}\quad \campo{Qué se separaría y por qué la comunicación elegida aporta valor.}}
-\guia{Redibujar a partir de su bosquejo a mano. Marcar límites de proceso, red, datos y elementos que ya existen.}
-\end{frame}
-
-\begin{frame}{Decisiones al distribuir el proyecto}\relax
-\small
-\begin{tabularx}{\linewidth}{@{}lX@{}}
-\toprule
-Comunicación & \campo{Operación, contrato y llamada bloqueante o no bloqueante. Justificar.}\\
-Transparencias & \campo{Una ofrecida y una limitada, con ejemplo para el usuario.}\\
-CAP & \campo{Topología supuesta, enlace que se corta y conducta de lectura/escritura.}\\
-PACELC & \campo{Con la red sana, qué consistencia y latencia buscaríamos y cómo medirlas.}\\
-\bottomrule
+\begin{tabularx}{\linewidth}{|l|X|}
+\hline
+\textbf{Caso} & \textbf{Resultado del ensayo de Byron, 20-nov-2026}\\\hline
+\texttt{/respuesta} & HTTP 200. Bloqueante 149 ms y no bloqueante 77 ms.\\\hline
+\texttt{/lenta} & Timeout. Bloqueante 3021 ms y no bloqueante 3027 ms.\\\hline
+Servidor detenido & Conexión fallida. 52 ms y 61 ms.\\\hline
+Servidor reiniciado & HTTP 200 en una nueva consulta bloqueante. 159 ms.\\\hline
 \end{tabularx}
-\guia{Vincular cada decisión con el flujo del diagrama. Precisar réplicas y garantías antes de asignar una etiqueta CAP.}
+\medskip
+{\footnotesize Conexión limitada a 2 s, petición a 3 s. El servidor demora 5 s en \texttt{/lenta}. Los tiempos corresponden a ejecuciones individuales.}
+\note{El ejemplo usa HTTP y JSON. La diferencia entre los modos se explica con el orden de los mensajes. El retardo del servidor es una condición controlada y los tiempos mostrados fueron comunicados por Byron tras ejecutar.}
 \end{frame}
 
-\begin{frame}{Fallo hipotético y lección para el proyecto}\relax
+\begin{frame}{\proyectoCuatro · consulta entre procesos}\relax
+{\small CLAB gestiona laboratorios y reservas. El esqueleto E1 contiene dos servicios de consulta independientes. \cite{clabEsqueleto2026}}
+\par\bigskip
+\begin{center}
+\input{../diagrama/integrante-4/clab-consulta-http.tikz}
+\end{center}
+\medskip
+{\small Reservas devuelve la información de Laboratorios. Su \texttt{RestClient} es bloqueante; el cliente de demostración permite elegir ambos modos.}
+\note{El diagrama representa los procesos declarados en el código del esqueleto de CLAB, commit 68cf3db. La consulta entrega información del servicio. Las reservas de negocio y su persistencia corresponden al desarrollo posterior. Los puertos mostrados son los valores por defecto.}
+\end{frame}
+
+\begin{frame}{Decisiones para CLAB}\relax
 \small
-\textbf{Escenario supuesto}\quad \campo{Durante una operación, el servicio o enlace falla.}\par
-\textbf{Causa y recuperación}\quad \campo{Cadena causal, detección y respuesta propuesta.}\par
-\textbf{Comparación}\quad \campo{Sistema real comparable, fuente y compromiso técnico.}\par
-\textbf{Lección}\quad \campo{Qué implementaríamos primero y con qué prueba lo validaríamos.}\par
-\guia{Separar el resultado esperado de una prueba ya realizada. Si prueban el fallo, registrar pasos, salida y fecha como simulación.}
+\begin{tabularx}{\linewidth}{|l|X|}
+\hline
+Comunicación & HTTP/JSON. La consulta interna de Reservas espera a Laboratorios.\\\hline
+Acceso & JSON oculta las clases internas. Las direcciones y los fallos siguen visibles.\\\hline
+Partición, propuesta & Si futuras réplicas quedan sin acuerdo, no confirmar reservas. Se pierde disponibilidad de escritura para conservar consistencia.\\\hline
+Sin partición, propuesta & Validar el horario y registrar la reserva con datos consistentes, aceptando el costo de coordinación y latencia.\\\hline
+\end{tabularx}
+\medskip
+{\footnotesize CAP/PACELC orientan la propuesta. El esqueleto aún no persiste ni replica reservas. \cite{clabEsqueleto2026,ahmed2023consistency}}
+\note{La operación crítica propuesta es confirmar un laboratorio en un intervalo. En una futura implementación replicada, una instancia aislada no debería confirmar por su cuenta. Sin partición, validar y registrar con consistencia exige coordinación. Son preferencias de diseño, no garantías demostradas por esta demo. Detener un proceso tampoco prueba una partición de red.}
+\end{frame}
+
+\begin{frame}{Fallo de una dependencia de CLAB}\relax
+\small
+\textbf{Causa y detección}\quad Byron detuvo Laboratorios. La consulta interna falló y Reservas respondió HTTP 503 en 178 ms. \cite{clabEsqueleto2026}\par\smallskip
+\textbf{Recuperación}\quad Reinicio manual y nueva consulta: HTTP 200 en 312 ms. El 503 maneja el error, pero no mantiene disponible la consulta.\par\smallskip
+\textbf{Comparación}\quad MRBS ya reserva y evita conflictos. CLAB aún solo consulta, aunque permitió reiniciar Laboratorios por separado. \cite{mrbs2026}\par\smallskip
+\textbf{Costo y lección}\quad La separación añade una dependencia de red. En futuras escrituras, limitar reintentos y prevenir duplicados. \cite{azureRetry2026}
+\note{Reservas detectó el fallo a través de una excepción de su cliente HTTP. Sus límites de conexión y lectura son de dos segundos cada uno. El cliente externo recibió una respuesta HTTP 503, no una conexión rechazada a Reservas. La recuperación fue manual, sin failover ni reintentos automáticos. Se reinició Laboratorios y se emitió otra petición. La comparación reconoce que MRBS ofrece funcionalidad de reservas que el esqueleto aún no implementa.}
 \end{frame}

@@ -1,0 +1,31 @@
+\documentclass[aspectratio=169,12pt]{beamer}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,fit}
+\setbeamertemplate{navigation symbols}{}
+\begin{document}
+\begin{frame}[plain]
+\centering
+\begin{tikzpicture}[
+  proceso/.style={draw=black,line width=1pt,rounded corners=2pt,
+    minimum width=3cm,minimum height=1.6cm,align=center,font=\large},
+  flecha/.style={-Stealth,line width=1pt,draw=black}
+]
+\node[proceso] (cliente) {Cliente Java};
+\node[proceso,right=1.65cm of cliente] (reservas) {Reservas\\{\normalsize puerto 8082}};
+\node[proceso,right=1.65cm of reservas] (laboratorios) {Laboratorios\\{\normalsize puerto 8081}};
+\node[draw=black,dashed,rounded corners=4pt,line width=.8pt,
+  fit=(cliente)(reservas)(laboratorios),inner xsep=5mm,inner ysep=13mm] (pc) {};
+\node[above=2mm of pc,font=\large\bfseries] {CLAB · PC local};
+\draw[flecha] ([yshift=3mm]cliente.east) --
+  node[above,font=\small]{HTTP} ([yshift=3mm]reservas.west);
+\draw[flecha] ([yshift=3mm]reservas.east) --
+  node[above,font=\small]{HTTP} ([yshift=3mm]laboratorios.west);
+\draw[flecha] ([yshift=-3mm]reservas.west) --
+  node[below,font=\small]{JSON} ([yshift=-3mm]cliente.east);
+\draw[flecha] ([yshift=-3mm]laboratorios.west) --
+  node[below,font=\small]{JSON} ([yshift=-3mm]reservas.east);
+\end{tikzpicture}
+\end{frame}
+\end{document}

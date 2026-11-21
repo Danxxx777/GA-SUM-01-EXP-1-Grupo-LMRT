@@ -1,9 +1,9 @@
 \bloque{Equipo LMRT}
 \begin{frame}{Conclusiones y preguntas}\relax
 \begin{itemize}
-\item {\campo{Una diferencia entre RPC, gRPC y RMI que las demos hayan mostrado.}}
-\item {\campo{Una decisión que aplicaríamos a los proyectos y su costo.}}
-\item {\campo{Una prueba pendiente para validar la distribución propuesta.}}
+\item Las demos difieren en el contrato: mensajes JSON-RPC, servicios \texttt{.proto} e interfaces Java RMI.
+\item Distribuir añade dependencias de red. Los límites de espera y los errores explícitos hacen visible el fallo.
+\item Para los PFC: probar identidad, reintentos sin duplicados y recuperación antes de ampliar la distribución.
 \end{itemize}
 \end{frame}
 \appendix

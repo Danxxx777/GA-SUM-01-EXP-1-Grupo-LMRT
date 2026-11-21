@@ -1,0 +1,24 @@
+% Diagrama propio de Allison Mera Jumbo, derivado del bosquejo a mano del 20-11-2026.
+% Vista parcial del RTV: solo la autorización de inicio de inspección.
+% Lo rojo es supuesto (gRPC), no implementado; hoy esa llamada es REST.
+\begin{tikzpicture}[
+  x=1cm,y=1cm,
+  bloque/.style={draw=Azul!60,fill=Bruma,rounded corners=2pt,
+    align=center,text width=2.6cm,minimum height=1.05cm,inner sep=4pt,font=\fontsize{9}{10.5}\selectfont},
+  base/.style={draw=Azul!60,fill=white,rounded corners=2pt,align=center,text width=2.3cm,
+    minimum height=.8cm,font=\fontsize{8.5}{10}\selectfont},
+  flujo/.style={-{Stealth[length=2mm]},thick,draw=Azul},
+  rotulo/.style={font=\fontsize{8}{9.5}\selectfont,align=center,text=Tinta}
+]
+\node[bloque,fill=white] (ins) at (0,0) {\textbf{Técnico inspector}\\o recepción};
+\node[bloque] (insp) at (4.6,0) {\textbf{Inspecciones}\\Spring Boot\\stub gRPC};
+\node[bloque] (tyP) at (11.6,0) {\textbf{Turnos y Pagos}\\Spring Boot\\servidor gRPC};
+\node[base] (db1) at (4.6,-2.2) {PostgreSQL\\inspecciones};
+\node[base] (db2) at (11.6,-2.2) {PostgreSQL\\turnos y pagos};
+\draw[flujo] (ins.east) -- node[above,rotulo]{iniciar} (insp.west);
+\draw[flujo,draw=Pendiente,very thick] ([yshift=2.5mm]insp.east) -- node[above=2pt,rotulo,text=Pendiente]{\textbf{gRPC}\\\texttt{AutorizarInspeccion}} ([yshift=2.5mm]tyP.west);
+\draw[flujo,draw=Pendiente,very thick] ([yshift=-2.5mm]tyP.west) -- node[below=2pt,rotulo,text=Pendiente]{\texttt{autorizacion\_id}\\o código de estado} ([yshift=-2.5mm]insp.east);
+\draw[flujo] (insp.south) -- node[right,rotulo]{JDBC} (db1.north);
+\draw[flujo] (tyP.south) -- node[right,rotulo]{JDBC} (db2.north);
+\node[rotulo,anchor=center] at (8.1,-2.2) {\textit{Hoy:} REST\\\texttt{POST /turnos/\{id\}/}\\\texttt{autorizaciones-inspeccion}};
+\end{tikzpicture}

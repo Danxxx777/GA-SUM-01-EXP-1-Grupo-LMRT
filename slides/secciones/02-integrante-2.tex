@@ -31,39 +31,33 @@
 	\includegraphics[width=.9\linewidth,height=.5\textheight,keepaspectratio]{../evidencias/integrante-2/demo-grpc/01-confirmado.png}
 \end{frame}
 
-\begin{frame}{\proyectoDos · arquitectura propuesta}\relax
-	{\small\textbf{Actualmente}\quad \campo{Problema, usuarios, componentes y cifra con fuente o medición.}}
-	\par\medskip
-	\centering
-	\begin{tikzpicture}
-		\node[nodo] (a) {Cliente\\{\campo{Componente actual}}};
-		\node[nodo,right=3cm of a] (b) {Servicio propuesto\\{\campo{Operación remota}}};
-		\draw[enlace] (a)--node[above,font=\small]{\campo{Protocolo y datos}}(b);
-	\end{tikzpicture}
-	\par\medskip
-	\raggedright
-	{\small\textbf{Propuesta}\quad \campo{Qué se separaría y por qué la comunicación elegida aporta valor.}}
-	\guia{Redibujar a partir de su bosquejo a mano. Marcar límites de proceso, red, datos y elementos que ya existen.}
+\begin{frame}{\proyectoDos · arquitectura propuesta (vista parcial)}\relax
+{\footnotesize\textbf{Actualmente}\quad El CRTVMV atiende cada vehículo en cinco puestos: guardia, recepción, recaudación, línea y digitación. El prototipo del PFC separa Inspecciones y Turnos y Pagos y los une por REST; p95 de 47,4 ms con 10 usuarios (medición local del equipo, 20/11/2026) \cite{rtvpfc2026}.}
+\par\smallskip
+\centering
+\resizebox{.84\linewidth}{!}{\input{../diagrama/integrante-2/rtv-autorizacion-grpc.tikz}}
+\par\smallskip
+\raggedright
+{\footnotesize\textbf{Propuesta}\quad Llevar la autorización de inicio a gRPC unario: contrato \texttt{.proto} tipado, stub generado y códigos de estado estándar, con la misma clave de idempotencia.}
 \end{frame}
 
-\begin{frame}{Decisiones al distribuir el proyecto}\relax
-	\small
-	\begin{tabularx}{\linewidth}{@{}lX@{}}
-		\toprule
-		Comunicación & \campo{Operación, contrato y llamada bloqueante o no bloqueante. Justificar.}\\
-		Transparencias & \campo{Una ofrecida y una limitada, con ejemplo para el usuario.}\\
-		CAP & \campo{Topología supuesta, enlace que se corta y conducta de lectura/escritura.}\\
-		PACELC & \campo{Con la red sana, qué consistencia y latencia buscaríamos y cómo medirlas.}\\
-		\bottomrule
-	\end{tabularx}
-	\guia{Vincular cada decisión con el flujo del diagrama. Precisar réplicas y garantías antes de asignar una etiqueta CAP.}
+\begin{frame}{Decisiones al distribuir el RTV (supuesto)}\relax
+\small
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+Comunicación & gRPC unario y bloqueante con \emph{deadline} de 3 s: Inspecciones necesita la autorización antes de registrar el inicio.\\
+Transparencias & \textbf{Ofrecida:} acceso, \texttt{AutorizarInspeccion} se llama como un método local. \textbf{Limitada:} fallos; el inspector vería \texttt{UNAVAILABLE} o \texttt{DEADLINE\_EXCEEDED} (probado en la demo).\\
+CAP & Una instancia por servicio y bases separadas. Si se corta el enlace: consistencia, no se inicia una inspección sin autorización.\\
+PACELC & Red sana: consistencia sobre latencia; se guarda una sola autorización por turno. Mediría el p95 con gRPC y lo compararía con los 47,4 ms de REST.\\
+\bottomrule
+\end{tabularx}
 \end{frame}
 
-\begin{frame}{Fallo hipotético y lección para el proyecto}\relax
-	\small
-	\textbf{Escenario supuesto}\quad \campo{Durante una operación, el servicio o enlace falla.}\par
-	\textbf{Causa y recuperación}\quad \campo{Cadena causal, detección y respuesta propuesta.}\par
-	\textbf{Comparación}\quad \campo{Sistema real comparable, fuente y compromiso técnico.}\par
-	\textbf{Lección}\quad \campo{Qué implementaríamos primero y con qué prueba lo validaríamos.}\par
-	\guia{Separar el resultado esperado de una prueba ya realizada. Si prueban el fallo, registrar pasos, salida y fecha como simulación.}
+\begin{frame}{Fallo hipotético y lección para el RTV}\relax
+\small
+\textbf{Escenario}\quad Turnos y Pagos guarda la autorización, pero la respuesta no llega antes del \emph{deadline}.\par\smallskip
+\textbf{Causa raíz}\quad El \emph{deadline} vencido no cancela lo que el servidor ya escribió \cite{grpcdeadlines}.\par\smallskip
+\textbf{Respuesta}\quad Inspecciones recibe \texttt{DEADLINE\_EXCEEDED} y reintenta con la misma clave; el servidor devuelve la autorización original.\par\smallskip
+\textbf{Comparación}\quad Stripe guarda el resultado de cada clave de idempotencia y lo devuelve en los reintentos \cite{stripeidempotency}. Compromiso: persistir las claves.\par\smallskip
+\textbf{Lección}\quad Primero, la clave de idempotencia en el contrato. Prueba pendiente: demorar el servidor más de 3 s, reintentar y contar una sola autorización.\par
 \end{frame}

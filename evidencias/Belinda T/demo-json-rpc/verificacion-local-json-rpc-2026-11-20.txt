@@ -1,0 +1,109 @@
+Verificacion automatizada de la demo local - 2026-11-20
+Datos ficticios; sin conexion al SGRA real ni a PostgreSQL.
+Servidor y clientes ejecutados en procesos separados.
+
+OK - Docente encontrado: {"jsonrpc": "2.0", "result": {"encontrado": true, "docente": {"teacherId": 7, "fullName": "Docente de ejemplo", "email": "docente@example.org"}}, "id": 1}
+OK - Sin asignacion: {"jsonrpc": "2.0", "result": {"encontrado": false, "docente": null}, "id": 1}
+OK - Parametro invalido: {"jsonrpc": "2.0", "error": {"code": -32602, "message": "Use idUsuario e idAsignatura enteros positivos"}, "id": 1}
+OK - Metodo desconocido: {"jsonrpc": "2.0", "error": {"code": -32601, "message": "Metodo no encontrado"}, "id": 2}
+OK - Peticion invalida: {"jsonrpc": "2.0", "error": {"code": -32600, "message": "Peticion invalida"}, "id": null}
+OK - JSON mal formado: -32700.
+OK - Notificacion individual y lote de notificaciones: HTTP 204 sin respuesta RPC.
+OK - Lote con dos llamadas y rechazo de lote vacio.
+
+Ejecucion cliente.py 101 12
+PETICION JSON-RPC
+{
+  "jsonrpc": "2.0",
+  "method": "consultarDocenteAsignado",
+  "params": {
+    "idUsuario": 101,
+    "idAsignatura": 12
+  },
+  "id": 1
+}
+
+RESPUESTA JSON-RPC
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "encontrado": true,
+    "docente": {
+      "teacherId": 7,
+      "fullName": "Docente de ejemplo",
+      "email": "docente@example.org"
+    }
+  },
+  "id": 1
+}
+
+RESULTADO: Docente de ejemplo (ID 7)
+
+
+Ejecucion cliente.py 101 99
+PETICION JSON-RPC
+{
+  "jsonrpc": "2.0",
+  "method": "consultarDocenteAsignado",
+  "params": {
+    "idUsuario": 101,
+    "idAsignatura": 99
+  },
+  "id": 1
+}
+
+RESPUESTA JSON-RPC
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "encontrado": false,
+    "docente": null
+  },
+  "id": 1
+}
+
+RESULTADO: Sin asignacion para ese usuario y asignatura.
+
+
+Ejecucion cliente.py 101 -1
+PETICION JSON-RPC
+{
+  "jsonrpc": "2.0",
+  "method": "consultarDocenteAsignado",
+  "params": {
+    "idUsuario": 101,
+    "idAsignatura": -1
+  },
+  "id": 1
+}
+
+RESPUESTA JSON-RPC
+{
+  "jsonrpc": "2.0",
+  "error": {
+    "code": -32602,
+    "message": "Use idUsuario e idAsignatura enteros positivos"
+  },
+  "id": 1
+}
+Error RPC -32602: Use idUsuario e idAsignatura enteros positivos
+
+OK - ejecutar.ps1 -Modo Cliente invoca correctamente el cliente.
+
+
+Registro del servidor:
+Servidor listo: http://127.0.0.1:64671/rpc
+Datos ficticios. Deja esta terminal abierta. Ctrl+C para salir.
+Operacion: consultarDocenteAsignado | {'idUsuario': 101, 'idAsignatura': 12} | {'encontrado': True, 'docente': {'teacherId': 7, 'fullName': 'Docente de ejemplo', 'email': 'docente@example.org'}}
+Operacion: consultarDocenteAsignado | {'idUsuario': 101, 'idAsignatura': 99} | {'encontrado': False, 'docente': None}
+Operacion: consultarDocenteAsignado | {'idUsuario': 101, 'idAsignatura': 12} | {'encontrado': True, 'docente': {'teacherId': 7, 'fullName': 'Docente de ejemplo', 'email': 'docente@example.org'}}
+Operacion: consultarDocenteAsignado | {'idUsuario': 101, 'idAsignatura': 12} | {'encontrado': True, 'docente': {'teacherId': 7, 'fullName': 'Docente de ejemplo', 'email': 'docente@example.org'}}
+Operacion: consultarDocenteAsignado | {'idUsuario': 101, 'idAsignatura': 12} | {'encontrado': True, 'docente': {'teacherId': 7, 'fullName': 'Docente de ejemplo', 'email': 'docente@example.org'}}
+Operacion: consultarDocenteAsignado | {'idUsuario': 101, 'idAsignatura': 12} | {'encontrado': True, 'docente': {'teacherId': 7, 'fullName': 'Docente de ejemplo', 'email': 'docente@example.org'}}
+Operacion: consultarDocenteAsignado | {'idUsuario': 101, 'idAsignatura': 99} | {'encontrado': False, 'docente': None}
+Operacion: consultarDocenteAsignado | {'idUsuario': 101, 'idAsignatura': 12} | {'encontrado': True, 'docente': {'teacherId': 7, 'fullName': 'Docente de ejemplo', 'email': 'docente@example.org'}}
+
+
+Servidor detenido: cliente devuelve codigo 1 y orienta a revisar la terminal A.
+No se pudo completar la comunicacion: <urlopen error [WinError 10061] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión>
+Comprueba que el servidor siga abierto en la terminal A y use el mismo puerto.

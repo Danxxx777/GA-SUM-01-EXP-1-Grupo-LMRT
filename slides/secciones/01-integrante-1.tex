@@ -29,13 +29,35 @@
 \note{Explicar RPC como modelo de invocación remota. Recorrer contrato, stub, serialización, petición, ejecución y respuesta. Aclarar que RPC no exige HTTP/2 ni Protocol Buffers. La guía personal de teoría está en personal/belinda/README.md y se excluye localmente de Git.}
 \end{frame}
 
-\begin{frame}{Ejemplo sencillo}\relax
-\textbf{Operación}\quad \campo{Operación pequeña con JSON-RPC u otra implementación RPC}\par
+\begin{frame}{Demo en vivo: consulta de docente con JSON-RPC}\relax
+{\small\texttt{consultarDocenteAsignado}\quad Dos procesos locales; datos ficticios.\par}
+\vspace{0mm}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.41\textwidth}
+\textbf{1. Servidor activo en A}\par
+{\footnotesize\texttt{python -B servidor.py}\par}
+{\small Dejar el proceso abierto.\par}
 \medskip
-\textbf{Entrada}\quad \campo{Dato de prueba}\par
-\textbf{Salida}\quad \campo{Resultado realmente obtenido}\par
-{\footnotesize Contrato y entradas de una API RPC \cite{arcuri2025evomaster}.}
-\guia{Mostrar método, argumentos, respuesta y los procesos que intervienen.}
+\textbf{2. Ejecutar el cliente en B}\par
+{\footnotesize\texttt{python -B cliente.py 101 12}\par}
+{\small Usuario 101, asignatura 12.\par}
+\medskip
+{\small\textbf{Segundo caso}\\
+\texttt{101 99} $\rightarrow$ sin asignación.\par}
+\end{column}
+\begin{column}{.55\textwidth}
+\textbf{Respuesta obtenida}\par
+\vspace{1mm}
+% Recorte de presentacion: se conserva la captura original completa.
+% Coordenadas derivadas de 880x1097 px a 95.99 dpi.
+\includegraphics[width=.94\linewidth,trim=11.25bp 360bp 315bp 292.5bp,clip]{../evidencias/Belinda T/demo-json-rpc/01-json-rpc-cliente-docente-encontrado-y-sin-asignacion-belinda-2026-11-20.png}
+\par\vspace{1mm}
+{\scriptsize Ejecución de Belinda, 20-11-2026.\par}
+\end{column}
+\end{columns}
+\vspace{0mm}
+{\scriptsize El ejemplo no se conecta al SGRA real ni a PostgreSQL. Capturas completas en evidencias.}
+\note{Presentar la operacion y pasar a las terminales para ejecutar la demo en vivo. Mantener servidor.py abierto en A. En B ejecutar python -B cliente.py 101 12, señalar method, params, id y result; después repetir con 101 99 si procede. La imagen de esta diapositiva es un recorte de la captura real aportada por Belinda y sirve como respaldo. Las dos capturas originales se conservan completas en evidencias/Belinda T/demo-json-rpc. La primera contiene los dos casos del cliente y la segunda el servidor procesándolos. El usuario es ficticio; la autenticación sigue siendo un requisito de integración futura a SGRA.}
 \end{frame}
 
 \begin{frame}{SGRA: consulta académica como servicio remoto}\relax
@@ -50,24 +72,52 @@
 \end{frame}
 
 \begin{frame}{Decisiones al distribuir el proyecto}\relax
-\small
-\begin{tabularx}{\linewidth}{@{}lX@{}}
-\toprule
-Comunicación & \campo{Operación, contrato y llamada bloqueante o no bloqueante. Justificar.}\\
-Transparencias & \campo{Una ofrecida y una limitada, con ejemplo para el usuario.}\\
-CAP & \campo{Topología supuesta, enlace que se corta y conducta de lectura/escritura.}\\
-PACELC & \campo{Con la red sana, qué consistencia y latencia buscaríamos y cómo medirlas.}\\
-\bottomrule
-\end{tabularx}
-\guia{Vincular cada decisión con el flujo del diagrama. Precisar réplicas y garantías antes de asignar una etiqueta CAP.}
+{\small\textbf{Topología supuesta:} una base PostgreSQL; sin réplicas ni caché local del docente.\par}
+\vspace{0mm}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.47\textwidth}
+\textbf{Comunicación}\par
+{\small JSON-RPC sobre HTTPS, petición--respuesta. El flujo espera al docente antes de crear la solicitud.\par}
+\medskip
+\textbf{Transparencias}\par
+{\small\textbf{Ubicación:} Angular conserva su API; el backend localiza el servicio.\\
+\textbf{Fallos, limitada:} si el servicio cae, se informa indisponibilidad.\par}
+\end{column}
+\begin{column}{.49\textwidth}
+\textbf{CAP · durante un corte}\par
+{\small Si se corta servicio--BD, no se confirma docente ni se continúa el alta. No hay una copia alternativa.\\
+\textbf{Sin etiqueta CP/AP demostrada.}\par}
+\medskip
+\textbf{PACELC · con red sana}\par
+{\small Leer la fuente primaria, sin caché. Medir latencia p50/p95 y errores.\\
+Sin réplicas: L/C no evaluado.\par}
+\end{column}
+\end{columns}
+\vspace{2mm}
+{\scriptsize Decisiones propuestas, no garantías ya implementadas. CAP/PACELC \cite{ahmed2023consistency}.}
+\note{Aplicar las decisiones a consultarDocenteAsignado. El corte puede estar entre backend y servicio o entre servicio y base; no interpretar una desconexión como encontrado=false. En el flujo que crea solicitudes no continuar sin validar el docente. La transparencia de ubicación se propone manteniendo la API Angular; la ubicación se configura en el backend. No se oculta la indisponibilidad al usuario. Una sola base no demuestra consistencia linealizable de todo el sistema ni evita cambios concurrentes entre consulta y alta. PACELC trata el compromiso en almacenamiento distribuido: no asignar PC/EC sin definir réplicas, coordinación y garantías. La latencia y los percentiles son métricas propuestas, no resultados medidos de SGRA.}
 \end{frame}
 
 \begin{frame}{Fallo hipotético y lección para el proyecto}\relax
-\small
-\textbf{Escenario supuesto}\quad \campo{Durante una operación, el servicio o enlace falla.}\par
-\textbf{Causa y recuperación}\quad \campo{Cadena causal, detección y respuesta propuesta.}\par
-{\footnotesize Diagnosticar la latencia de llamadas \cite{traini2023delag}.}\par
-\textbf{Comparación}\quad \campo{Sistema real comparable, fuente y compromiso técnico.}\par
-\textbf{Lección}\quad \campo{Qué implementaríamos primero y con qué prueba lo validaríamos.}\par
-\guia{Separar el resultado esperado de una prueba ya realizada. Si prueban el fallo, registrar pasos, salida y fecha como simulación.}
+{\small\textbf{Supuesto:} el servicio académico se reinicia durante la consulta del docente.\par}
+\vspace{2mm}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.47\textwidth}
+\textbf{Causa e impacto}\par
+{\small Una sola instancia del servicio: al perderla, el backend no verifica el docente y no continúa ese flujo de alta.\par}
+\medskip
+\textbf{Detección y recuperación}\par
+{\small Tiempo límite y error explícito. Recuperar el servicio y repetir solo la consulta; no reenviar el alta completa.\par}
+\end{column}
+\begin{column}{.49\textwidth}
+\textbf{Comparación · Moodle + Scheduler}\par
+{\small Integra citas en Moodle. SGRA propone la consulta en otro proceso: despliegue separado, con comunicación y operación adicionales \cite{moodle2025scheduler}.\par}
+\medskip
+\textbf{Lección y conclusión}\par
+{\small Validar identidad y trazas en esta lectura. Probar corte y recuperación antes de distribuir más funciones.\par}
+\end{column}
+\end{columns}
+\vspace{2mm}
+{\scriptsize Incidente supuesto, no ocurrido en producción. La demo prueba JSON-RPC; la integración a SGRA sigue pendiente.}
+\note{Distinguir causa supuesta y sintoma: el escenario postula reinicio del servicio, pero un timeout por si solo no lo demuestra; deben correlacionarse registros del backend y servicio. No interpretar la falta de respuesta como encontrado=false. La repeticion propuesta es de una lectura sin efectos, dentro de un limite de intentos y plazo; no volver a ejecutar automaticamente la creacion de una solicitud. Scheduler es un plugin real de Moodle que permite reservar citas de estudiantes con docentes; no equivale al flujo completo de refuerzos de SGRA ni se ha verificado que use JSON-RPC o procesos independientes. La prueba de fallo integrado, la autenticacion remota y la instrumentacion aun estan pendientes. Guia y guiones completos en el README personal, apartados 14.7 y 15.}
 \end{frame}

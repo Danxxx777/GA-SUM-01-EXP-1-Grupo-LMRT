@@ -185,3 +185,9 @@
 - **Lo realizado.** Se mantuvieron cinco diapositivas sobre llamadas, demo sencilla, topología Cliente-A-B, decisiones y fallo de dependencia. Se añadió un TikZ del modelo genérico. CLAB, sus rutas y sus puertos quedaron en las notas orales y en el documento de apoyo, separados del modelo proyectado. El bosquejo manuscrito de CLAB se conserva como evidencia de la aplicación al PFC.
 - **Alcance y asistencia.** Codex realizó la edición y preparó el guion explicativo. No ejecutó la demostración personal ni añadió mediciones. En el guion se diferencian el flujo de consulta probado, la recuperación manual y las propuestas futuras de reservas replicadas.
 - **Verificación documental.** Se recompilaron ambos PDF y se revisó visualmente el bloque. Las cinco diapositivas mantienen los números 17 a 21 y no muestran nombres ni rutas de CLAB. Las notas conservan cuatro páginas, la aplicación oral al PFC y la fotografía original. Se comprobaron los bloques PowerShell mediante análisis de sintaxis, sin ejecutar el experimento del estudiante.
+
+## 2026-11-21 - Corrección de la declaración individual
+
+- **Integrante presente.** Byron Daniel Loor Mendoza, mediante esta sesión de chat.
+- **Lo realizado.** Se contrastó la declaración con la sección 6.1 del encuadre. Con asistencia de Codex, se pasó el bloque individual a primera persona y se incorporaron el modelo GPT-6.1 Sol en modo alto y el uso de Overleaf, indicados por Byron. Se conservaron los usos reales en textos técnicos, código y diagramas y la distinción de sus ejecuciones personales desde PowerShell.
+- **Verificación.** Codex recompiló las notas y revisó visualmente la página de la declaración. El PDF conserva cuatro páginas. No se ejecutaron nuevas pruebas personales ni se modificaron las declaraciones de los compañeros. El script opcional de grabación quedó fuera de esta corrección.

@@ -1,0 +1,14 @@
+\begin{tikzpicture}[
+  proceso/.style={nodo,minimum width=2.65cm,minimum height=1.25cm,font=\small},
+  consulta/.style={-Stealth,thick,draw=Azul}
+]
+\node[proceso] (cliente) {Cliente Java\\\texttt{send/sendAsync}};
+\node[proceso,right=1.7cm of cliente] (reservas) {Reservas\\puerto 8082};
+\node[proceso,right=1.7cm of reservas] (laboratorios) {Laboratorios\\puerto 8081};
+\draw[consulta] (cliente) -- node[above,font=\scriptsize]{HTTP/JSON} (reservas);
+\draw[consulta] (reservas) -- node[above,font=\scriptsize]{HTTP/JSON} (laboratorios);
+\draw[consulta] ([yshift=-3mm]laboratorios.west) --
+  node[below,font=\scriptsize]{información} ([yshift=-3mm]reservas.east);
+\draw[consulta] ([yshift=-3mm]reservas.west) --
+  node[below,font=\scriptsize]{respuesta} ([yshift=-3mm]cliente.east);
+\end{tikzpicture}

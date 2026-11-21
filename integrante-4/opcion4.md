@@ -35,3 +35,23 @@ El integrante ejecuta los casos y conserva las salidas originales. A partir del 
 - [Java 17, HttpClient, send y sendAsync](https://docs.oracle.com/en/java/javase/17/docs/api/java.net.http/java/net/http/HttpClient.html).
 - [Java 17, HttpRequest.Builder, timeout](https://docs.oracle.com/en/java/javase/17/docs/api/java.net.http/java/net/http/HttpRequest.Builder.html).
 - [Código del servicio Reservas en CLAB](https://github.com/Danxxx777/clab-pfc-7a/tree/68cf3dbf1ddd5133ca8e1b430cfb113cfd10341d/src/servicio-reservas).
+
+## Compilación del bloque individual
+
+Se necesita una distribución LaTeX con pdfLaTeX, Biber y los paquetes `babel` (español), `mathptmx`, `beamer`, `tikz`, `booktabs`, `tabularx`, `biblatex` con estilo IEEE, `graphicx` e `hyperref`. La presentación reutiliza el estilo de `slides/tema.tex`, conservado en el repositorio. Sus fuentes bibliográficas y contenido son los de `integrante-4/`.
+
+Desde la raíz del repositorio, en PowerShell:
+
+```powershell
+Set-Location integrante-4/slides
+pdflatex -interaction=nonstopmode -halt-on-error main.tex
+biber main
+pdflatex -interaction=nonstopmode -halt-on-error main.tex
+pdflatex -interaction=nonstopmode -halt-on-error main.tex
+Set-Location ../notas
+pdflatex -interaction=nonstopmode -halt-on-error main.tex
+pdflatex -interaction=nonstopmode -halt-on-error main.tex
+Set-Location ../..
+```
+
+Los resultados son `integrante-4/slides/main.pdf` e `integrante-4/notas/main.pdf`. La demo Java requiere Java 17 o superior. El anexo de GitHub se conserva como caso de apoyo mientras el equipo acuerda su sistema. La ejecución del 20 de noviembre está documentada en `integrante-4/evidencias/demo-http/`.

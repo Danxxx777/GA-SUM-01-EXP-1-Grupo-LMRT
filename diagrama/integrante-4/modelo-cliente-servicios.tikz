@@ -1,0 +1,14 @@
+\begin{tikzpicture}[
+  proceso/.style={nodo,minimum width=2.8cm,minimum height=1.25cm,font=\small},
+  consulta/.style={-Stealth,thick,draw=Azul}
+]
+\node[proceso] (cliente) {Cliente};
+\node[proceso,right=1.7cm of cliente] (a) {Servicio A};
+\node[proceso,right=1.7cm of a] (b) {Servicio B};
+\draw[consulta] (cliente) -- node[above,font=\scriptsize]{HTTP/JSON} (a);
+\draw[consulta] (a) -- node[above,font=\scriptsize]{HTTP/JSON} (b);
+\draw[consulta] ([yshift=-3mm]b.west) --
+  node[below,font=\scriptsize]{dato} ([yshift=-3mm]a.east);
+\draw[consulta] ([yshift=-3mm]a.west) --
+  node[below,font=\scriptsize]{respuesta} ([yshift=-3mm]cliente.east);
+\end{tikzpicture}

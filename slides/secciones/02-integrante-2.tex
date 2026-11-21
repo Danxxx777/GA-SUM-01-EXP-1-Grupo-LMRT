@@ -1,55 +1,69 @@
 % Bloque independiente. Sustituir los campos por evidencia de su proyecto.
 \bloque{\personaDos}
 \section{gRPC}
-\begin{frame}{gRPC}\relax
-{\large\bfseries Un contrato en un archivo \texttt{.proto} define el servicio. Protocol Buffers codifica los mensajes por defecto y HTTP/2 los transporta.\par}
-\medskip
-{\small Fuente de apoyo \cite{kaminski2023}.}
-\guia{\campo{Explicar un concepto con sus palabras y relacionarlo con la demo.}}
-\note{Completar el guion en notas/secciones/02-integrante-2.tex.}
+\begin{frame}{gRPC: un contrato, dos extremos}\relax
+	{\bfseries El servicio se define una sola vez en un archivo \texttt{.proto}; de ese contrato se genera el código del cliente y del servidor.\par}
+	\medskip
+	\centering
+	\begin{tikzpicture}[font=\small]
+		\node[nodo] (p) at (4.5,1.8) {\texttt{turnos.proto}\\contrato};
+		\node[nodo] (c) at (0,0) {Cliente\\\textbf{stub} generado};
+		\node[nodo] (s) at (9,0) {Servidor\\implementación};
+		\draw[enlace,-Stealth,dashed] (p)--node[above left,font=\footnotesize]{genera}(c);
+		\draw[enlace,-Stealth,dashed] (p)--node[above right,font=\footnotesize]{genera}(s);
+		\draw[enlace] (c)--node[below,font=\footnotesize]{HTTP/2 + Protocol Buffers (binario)}(s);
+	\end{tikzpicture}
+	\par\smallskip
+	\raggedright
+	{\small El cliente y el servidor pueden estar en lenguajes distintos: solo comparten el contrato.}
+	{\footnotesize Fuente: \cite{kaminski2023}.}
 \end{frame}
 
-\begin{frame}{Ejemplo sencillo}\relax
-\textbf{Operación}\quad \campo{Servicio unario gRPC con una petición y una respuesta}\par
-\medskip
-\textbf{Entrada}\quad \campo{Dato de prueba}\par
-\textbf{Salida}\quad \campo{Resultado realmente obtenido}\par
-\guia{Señalar el contrato y ejecutar una llamada. Identificar cliente, servidor y mensaje.}
+\begin{frame}{Ejemplo: consulta de turno por placa}\relax
+	\small
+	\textbf{Contrato}\quad{\scriptsize\texttt{rpc ConsultarTurno(ConsultaTurnoRequest) returns (ConsultaTurnoResponse)}}\par
+	\smallskip
+	\textbf{Entrada}\quad placa \texttt{GSA-1234} \qquad \textbf{Salida}\quad turno el 2026-11-25 09:00, \texttt{CONFIRMADO}\par
+	\smallskip
+	\textbf{Llamada}\quad unaria y bloqueante, con un \emph{deadline} de 3 segundos.\par
+	\smallskip
+	\centering
+	\includegraphics[width=.9\linewidth,height=.5\textheight,keepaspectratio]{../evidencias/integrante-2/demo-grpc/01-confirmado.png}
 \end{frame}
 
 \begin{frame}{\proyectoDos · arquitectura propuesta}\relax
-{\small\textbf{Actualmente}\quad \campo{Problema, usuarios, componentes y cifra con fuente o medición.}}
-\par\medskip
-\centering
-\begin{tikzpicture}
-\node[nodo] (a) {Cliente\\{\campo{Componente actual}}};
-\node[nodo,right=3cm of a] (b) {Servicio propuesto\\{\campo{Operación remota}}};
-\draw[enlace] (a)--node[above,font=\small]{\campo{Protocolo y datos}}(b);
-\end{tikzpicture}
-\par\medskip
-\raggedright
-{\small\textbf{Propuesta}\quad \campo{Qué se separaría y por qué la comunicación elegida aporta valor.}}
-\guia{Redibujar a partir de su bosquejo a mano. Marcar límites de proceso, red, datos y elementos que ya existen.}
+	{\small\textbf{Actualmente}\quad \campo{Problema, usuarios, componentes y cifra con fuente o medición.}}
+	\par\medskip
+	\centering
+	\begin{tikzpicture}
+		\node[nodo] (a) {Cliente\\{\campo{Componente actual}}};
+		\node[nodo,right=3cm of a] (b) {Servicio propuesto\\{\campo{Operación remota}}};
+		\draw[enlace] (a)--node[above,font=\small]{\campo{Protocolo y datos}}(b);
+	\end{tikzpicture}
+	\par\medskip
+	\raggedright
+	{\small\textbf{Propuesta}\quad \campo{Qué se separaría y por qué la comunicación elegida aporta valor.}}
+	\guia{Redibujar a partir de su bosquejo a mano. Marcar límites de proceso, red, datos y elementos que ya existen.}
 \end{frame}
 
 \begin{frame}{Decisiones al distribuir el proyecto}\relax
-\small
-\begin{tabularx}{\linewidth}{@{}lX@{}}
-\toprule
-Comunicación & \campo{Operación, contrato y llamada bloqueante o no bloqueante. Justificar.}\\
-Transparencias & \campo{Una ofrecida y una limitada, con ejemplo para el usuario.}\\
-CAP & \campo{Topología supuesta, enlace que se corta y conducta de lectura/escritura.}\\
-PACELC & \campo{Con la red sana, qué consistencia y latencia buscaríamos y cómo medirlas.}\\
-\bottomrule
-\end{tabularx}
-\guia{Vincular cada decisión con el flujo del diagrama. Precisar réplicas y garantías antes de asignar una etiqueta CAP.}
+	\small
+	\begin{tabularx}{\linewidth}{@{}lX@{}}
+		\toprule
+		Comunicación & \campo{Operación, contrato y llamada bloqueante o no bloqueante. Justificar.}\\
+		Transparencias & \campo{Una ofrecida y una limitada, con ejemplo para el usuario.}\\
+		CAP & \campo{Topología supuesta, enlace que se corta y conducta de lectura/escritura.}\\
+		PACELC & \campo{Con la red sana, qué consistencia y latencia buscaríamos y cómo medirlas.}\\
+		\bottomrule
+	\end{tabularx}
+	\guia{Vincular cada decisión con el flujo del diagrama. Precisar réplicas y garantías antes de asignar una etiqueta CAP.}
 \end{frame}
 
 \begin{frame}{Fallo hipotético y lección para el proyecto}\relax
-\small
-\textbf{Escenario supuesto}\quad \campo{Durante una operación, el servicio o enlace falla.}\par
-\textbf{Causa y recuperación}\quad \campo{Cadena causal, detección y respuesta propuesta.}\par
-\textbf{Comparación}\quad \campo{Sistema real comparable, fuente y compromiso técnico.}\par
-\textbf{Lección}\quad \campo{Qué implementaríamos primero y con qué prueba lo validaríamos.}\par
-\guia{Separar el resultado esperado de una prueba ya realizada. Si prueban el fallo, registrar pasos, salida y fecha como simulación.}
+	\small
+	\textbf{Escenario supuesto}\quad \campo{Durante una operación, el servicio o enlace falla.}\par
+	\textbf{Causa y recuperación}\quad \campo{Cadena causal, detección y respuesta propuesta.}\par
+	\textbf{Comparación}\quad \campo{Sistema real comparable, fuente y compromiso técnico.}\par
+	\textbf{Lección}\quad \campo{Qué implementaríamos primero y con qué prueba lo validaríamos.}\par
+	\guia{Separar el resultado esperado de una prueba ya realizada. Si prueban el fallo, registrar pasos, salida y fecha como simulación.}
 \end{frame}

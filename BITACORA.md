@@ -119,3 +119,12 @@
 - **Pendiente.** Los dos integrantes con campos abiertos deben incorporar sus textos y usos efectivos de IA. Después habrá que recompilar y revisar nuevamente la extensión total.
 - **Asistencia utilizada.** OpenAI Codex apoyó la redacción formal y el resumen de las notas a partir del contenido informalizado de manera suelta de mi autoria y las evidencias ya preparados, actualizó las rutas y reorganizó los elementos generales.
 - **Registro en Git.** [cc84089](https://github.com/Danxxx777/GA-SUM-01-EXP-1-Grupo-LMRT/commit/cc84089), «Completa notas de Belinda y ajusta documento grupal a cuatro páginas». Se publicaron únicamente los cambios de las notas y su PDF; no se incluyeron la bitácora ni los README personales.
+
+### 2026-11-20 · Mera Jumbo Allison
+
+- **Integrantes presentes** — Allison Mera.
+- **Commit(s)** — [5aa1bee](https://github.com/Danxxx777/GA-SUM-01-EXP-1-Grupo-LMRT/commit/5aa1bee) — «Completas las diapositivas de teoría gRPC y del ejemplo con la captura de la demo.»; [8e8ed20](https://github.com/Danxxx777/GA-SUM-01-EXP-1-Grupo-LMRT/commit/8e8ed20) — «Agrega el esquema a mano de la arquitectura propuesta».
+- **Qué se hizo** — Completé con asistencia de Claude mis dos primeras diapositivas en `slides/secciones/02-integrante-2.tex`: la teoría de gRPC, con un diagrama del contrato `.proto` que genera el cliente y el servidor, y el ejemplo de la consulta de turno por placa, con la entrada, la salida real y la captura de mi demo. Dibujé a mano el bosquejo de la arquitectura propuesta para mi proyecto, con el servicio de Inspecciones llamando por gRPC al de Turnos y Pagos, y lo subí a `evidencias/integrante-2/esquema-mano/`.
+- **Problema encontrado** — Al compilar en TeXstudio se sobrescribía `slides/main.pdf` y aparecía el archivo temporal `main.synctex.gz`. Además, al subir el bosquejo, GitHub rechazó el push porque otra integrante había subido cambios al mismo tiempo.
+- **Solución y comprobación** — Dejé fuera del commit `main.pdf` y `main.synctex.gz` para no generar conflictos con el PDF del equipo. Integré los cambios remotos con un merge desde IntelliJ y volví a empujar. Compilé `slides/main.tex` y comprobé que mis diapositivas 7 y 8 se vieran sin campos pendientes.
+- **Tiempo dedicado** — 40 min.

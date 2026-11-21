@@ -47,6 +47,8 @@ El ensayo debe mostrar rostro y voz de todos los integrantes. Antes de entregar,
 
 Cada integrante edita su sección en slides/secciones/ y notas/secciones/. El estilo de las diapositivas está en slides/tema.tex; los nombres y proyectos se definen en slides/equipo.tex.
 
+El [modelo digital del esquema de CLAB](diagrama/integrante-4/clab-consulta-http.png) sirve de referencia para el dibujo manual de Byron. La foto auténtica se añadirá en evidencias/integrante-4/esquema-mano/; el modelo no se presenta como fotografía de un bosquejo original.
+
 La declaración **general** de uso de IA está al final de notas/main.tex, después de la tabla de aportes y antes de las referencias. Las contribuciones y comprobaciones se describen también en la bitácora.
 
 ## Compilación
@@ -97,26 +99,12 @@ Las referencias se mantienen generales y al final. Ambos documentos cargan refer
 ## Pendientes antes de la entrega
 
 - [ ] Añadir el enlace abierto al video del ensayo y comprobar rostro y voz de todos.
-- [ ] Completar los campos rojos de los integrantes y la conclusión general.
+- [x] Integrar los cuatro bloques, completar el cierre y ocultar las guías de edición.
 - [ ] Completar los usos de IA que aún no se hayan declarado.
-- [ ] Recompilar los dos PDF finales y comprobar notas de 2 a 4 páginas.
+- [x] Recompilar los PDF integrados y comprobar las notas en cuatro páginas.
+- [ ] Incorporar la fotografía auténtica del esquema manuscrito de revisión de Byron, con nombre y fecha real, y volver a revisar el PDF.
 - [ ] Confirmar la entrega previa de FORM-MC-01 y FORM-AC-01 en el SGA.
 - [ ] Confirmar el registro del tema y que no repita el sistema del TA-IND-01 de un integrante, conforme al encuadre acordado con el docente.
-- [ ] Preparar una pregunta crítica para otro equipo. **Pregunta del equipo:** PENDIENTE.
+- [ ] Formular una pregunta crítica a otro equipo. **Pregunta propuesta:** si el cliente agota su tiempo de espera después de que el servidor guarda una operación, ¿cómo evitan duplicarla al reintentar y con qué prueba lo comprueban?
 - [ ] Ensayar respuestas sobre las secciones de los demás integrantes.
 - [ ] Verificar acceso público al repositorio y completar el material antes de la clase.
-
-## Entrega en el SGA
-
-**PENDIENTE — preparar el PDF identificativo de una sola página**, con los datos del equipo y la URL completa del repositorio en una sola línea.
-
-- Asignatura: Aplicaciones Distribuidas.
-- Actividad: GA-SUM-02 / EXP-1.
-- Equipo: LMRT.
-- Integrantes: los cuatro nombres completos indicados arriba.
-- Paralelo, docente y demás datos identificativos requeridos: PENDIENTE.
-- URL que debe figurar completa:
-
-https://github.com/Danxxx777/GA-SUM-01-EXP-1-Grupo-LMRT
-
-Al SGA se entrega ese PDF identificativo; el material de trabajo se conserva en este repositorio.

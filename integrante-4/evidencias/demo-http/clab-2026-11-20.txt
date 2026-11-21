@@ -1,0 +1,57 @@
+Extractos de las salidas de CLAB proporcionadas por Byron Daniel Loor Mendoza
+en la sesión de chat del 20 de noviembre de 2026.
+Codex transcribió los fragmentos para conservar los mensajes, rutas y tiempos.
+Los timestamps de las respuestas HTTP se conservan tal como fueron recibidos.
+
+COMPILACION Y PRUEBAS AUTOMATIZADAS EJECUTADAS POR BYRON
+
+PS D:\7mo Software\Aplicaciones Distribuidas\clab-pfc-7a> .\mvnw.cmd -B -ntp verify
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+[INFO] Total time:  5.157 s
+[INFO] Finished at: 2026-11-20T18:12:56-05:00
+
+CONSULTA CON LOS DOS SERVICIOS INICIADOS
+
+PS D:\7mo Software\Aplicaciones Distribuidas\clab-pfc-7a> Invoke-RestMethod http://127.0.0.1:8082/api/reservas/comunicacion |
+>>     ConvertTo-Json -Depth 3
+{
+    "servicio":  "reservas",
+    "laboratorios":  {
+                         "servicio":  "laboratorios",
+                         "mensaje":  "Servicio de laboratorios de CLAB disponible"
+                     }
+}
+
+CONSULTA DESPUES DE DETENER LABORATORIOS
+
+PS D:\7mo Software\Aplicaciones Distribuidas\GA-SUM-01-EXP-1-Grupo-LMRT> java -cp build opcion4.Cliente no-bloqueante http://127.0.0.1:8082/api/reservas/comunicacion
+Modo: no-bloqueante
+Destino: http://127.0.0.1:8082/api/reservas/comunicacion
+sendAsync() devolvió un futuro. El hilo principal continúa.
+El futuro ya terminó: false
+Estado HTTP: 503
+Cuerpo: {"timestamp":"2026-11-20T23:15:08.448+00:00","status":503,"error":"Service Unavailable","message":"No se pudo consultar el servicio de laboratorios","path":"/api/reservas/comunicacion"}
+Tiempo observado en esta ejecución: 178 ms
+
+INTENTO CON UNA URL MAL COPIADA DESPUES DEL REINICIO
+
+PS D:\7mo Software\Aplicaciones Distribuidas\GA-SUM-01-EXP-1-Grupo-LMRT> java -cp build opcion4.Cliente no-bloqueante http://127.0.0.1:8082/api/reservas/comunicacionjava
+Modo: no-bloqueante
+Destino: http://127.0.0.1:8082/api/reservas/comunicacionjava
+sendAsync() devolvió un futuro. El hilo principal continúa.
+El futuro ya terminó: false
+Estado HTTP: 404
+Cuerpo: {"timestamp":"2026-11-20T23:16:22.752+00:00","status":404,"error":"Not Found","message":"No static resource api/reservas/comunicacionjava.","path":"/api/reservas/comunicacionjava"}
+Tiempo observado en esta ejecución: 108 ms
+
+CONSULTA CON LA RUTA CORRECTA TRAS REINICIAR LABORATORIOS
+
+PS D:\7mo Software\Aplicaciones Distribuidas\GA-SUM-01-EXP-1-Grupo-LMRT> java -cp build opcion4.Cliente no-bloqueante http://127.0.0.1:8082/api/reservas/comunicacion
+Modo: no-bloqueante
+Destino: http://127.0.0.1:8082/api/reservas/comunicacion
+sendAsync() devolvió un futuro. El hilo principal continúa.
+El futuro ya terminó: false
+Estado HTTP: 200
+Cuerpo: {"servicio":"reservas","laboratorios":{"servicio":"laboratorios","mensaje":"Servicio de laboratorios de CLAB disponible"}}
+Tiempo observado en esta ejecución: 312 ms

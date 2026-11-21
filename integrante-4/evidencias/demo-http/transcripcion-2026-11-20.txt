@@ -1,0 +1,71 @@
+Extractos de las salidas proporcionadas por Byron Daniel Loor Mendoza
+en la sesión de chat del 20 de noviembre de 2026.
+Codex transcribió los fragmentos para conservar los comandos, mensajes y tiempos.
+
+RESPUESTA NORMAL
+
+PS D:\7mo Software\Aplicaciones Distribuidas\GA-SUM-01-EXP-1-Grupo-LMRT> java -cp build opcion4.Cliente bloqueante
+Modo: bloqueante
+Destino: http://127.0.0.1:8083/respuesta
+El hilo principal espera dentro de send().
+Estado HTTP: 200
+Cuerpo: {"servicio":"ejemplo-opcion4","mensaje":"Respuesta disponible"}
+Tiempo observado en esta ejecución: 149 ms
+
+PS D:\7mo Software\Aplicaciones Distribuidas\GA-SUM-01-EXP-1-Grupo-LMRT> java -cp build opcion4.Cliente no-bloqueante
+Modo: no-bloqueante
+Destino: http://127.0.0.1:8083/respuesta
+sendAsync() devolvió un futuro. El hilo principal continúa.
+El futuro ya terminó: false
+Estado HTTP: 200
+Cuerpo: {"servicio":"ejemplo-opcion4","mensaje":"Respuesta disponible"}
+Tiempo observado en esta ejecución: 77 ms
+
+TIMEOUT
+
+PS D:\7mo Software\Aplicaciones Distribuidas\GA-SUM-01-EXP-1-Grupo-LMRT> java -cp build opcion4.Cliente bloqueante http://127.0.0.1:8083/lenta
+Modo: bloqueante
+Destino: http://127.0.0.1:8083/lenta
+El hilo principal espera dentro de send().
+Se agotó un tiempo de espera: HttpTimeoutException
+Tiempo observado en esta ejecución: 3021 ms
+
+PS D:\7mo Software\Aplicaciones Distribuidas\GA-SUM-01-EXP-1-Grupo-LMRT> java -cp build opcion4.Cliente no-bloqueante http://127.0.0.1:8083/lenta
+Modo: no-bloqueante
+Destino: http://127.0.0.1:8083/lenta
+sendAsync() devolvió un futuro. El hilo principal continúa.
+El futuro ya terminó: false
+Se agotó un tiempo de espera: HttpTimeoutException
+Tiempo observado en esta ejecución: 3027 ms
+
+DESCONEXION TRAS DETENER EL PROCESO DEL SERVIDOR
+
+PS D:\7mo Software\Aplicaciones Distribuidas\GA-SUM-01-EXP-1-Grupo-LMRT> java -cp build opcion4.Cliente bloqueante
+Modo: bloqueante
+Destino: http://127.0.0.1:8083/respuesta
+El hilo principal espera dentro de send().
+Conexión fallida. Comprueba que el servicio esté iniciado y la URL sea correcta.
+Tiempo observado en esta ejecución: 52 ms
+
+PS D:\7mo Software\Aplicaciones Distribuidas\GA-SUM-01-EXP-1-Grupo-LMRT> java -cp build opcion4.Cliente no-bloqueante
+Modo: no-bloqueante
+Destino: http://127.0.0.1:8083/respuesta
+sendAsync() devolvió un futuro. El hilo principal continúa.
+El futuro ya terminó: false
+Conexión fallida. Comprueba que el servicio esté iniciado y la URL sea correcta.
+Tiempo observado en esta ejecución: 61 ms
+
+RECUPERACION DESPUES DE INICIAR EL SERVIDOR EN OTRA VENTANA
+
+PS D:\7mo Software\Aplicaciones Distribuidas\GA-SUM-01-EXP-1-Grupo-LMRT> java -cp build opcion4.Cliente bloqueante
+Modo: bloqueante
+Destino: http://127.0.0.1:8083/respuesta
+El hilo principal espera dentro de send().
+Estado HTTP: 200
+Cuerpo: {"servicio":"ejemplo-opcion4","mensaje":"Respuesta disponible"}
+Tiempo observado en esta ejecución: 159 ms
+
+MENSAJES APORTADOS DESDE LA CONSOLA DEL SERVIDOR
+
+Error al entregar la respuesta: IOException
+Error al entregar la respuesta: IOException

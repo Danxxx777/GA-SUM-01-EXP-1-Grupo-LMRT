@@ -191,3 +191,12 @@
 - **Integrante presente.** Byron Daniel Loor Mendoza, mediante esta sesión de chat.
 - **Lo realizado.** Se contrastó la declaración con la sección 6.1 del encuadre. Con asistencia de Codex, se pasó el bloque individual a primera persona y se incorporaron el modelo GPT-6.1 Sol en modo alto y el uso de Overleaf, indicados por Byron. Se conservaron los usos reales en textos técnicos, código y diagramas y la distinción de sus ejecuciones personales desde PowerShell.
 - **Verificación.** Codex recompiló las notas y revisó visualmente la página de la declaración. El PDF conserva cuatro páginas. No se ejecutaron nuevas pruebas personales ni se modificaron las declaraciones de los compañeros. El script opcional de grabación quedó fuera de esta corrección.
+
+### 2026-11-21 · Mera Jumbo Allison
+
+- **Integrantes presentes** — Allison Mera.
+- **Commit(s)** — [2542c81](https://github.com/Danxxx777/GA-SUM-01-EXP-1-Grupo-LMRT/commit/2542c81) — «Agrega bitácora del trabajo» (registro del trabajo del 2026-11-20). Esta entrada se agrega en un commit propio.
+- **Qué se hizo** — Revisé con asistencia de Claude el estado del repositorio después de la integración del bloque de Byron y comprobé que mis diapositivas, notas, diagrama, demo y referencias no cambiaron. Preparé y ajusté el guion de mi intervención en el video para que dure unos tres minutos, con un lenguaje semitécnico y palabras clave para no leer. Preparé el PDF de una página para el SGA, con los datos del equipo, del docente, del periodo y la URL completa del repositorio en una sola línea.
+- **Problema encontrado** — El historial del repositorio fue reescrito con un *force push* mientras se integraba el bloque 4, por lo que debía confirmar que mis commits seguían presentes. Además, el primer guion era demasiado largo y técnico para el tiempo de exposición.
+- **Solución y comprobación** — Cloné el repositorio de nuevo y verifiqué que mis commits de los días 18, 19, 20 y 21 siguen en el historial. Compilé las diapositivas (27 páginas) y las notas (4 páginas) sin errores ni citas sin definir. Reduje el guion a unas 420 palabras y comprobé que el PDF del SGA ocupa una sola página y que la URL entra completa en una línea.
+- **Tiempo dedicado** — 1 h.

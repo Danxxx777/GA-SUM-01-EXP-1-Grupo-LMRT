@@ -19,15 +19,12 @@ Los materiales distinguen el estado actual comprobado en código, las demos ejec
 
 ## Video del ensayo
 
-**PENDIENTE — pegar aquí el enlace al ensayo completo:**
+**URL:** (https://youtu.be/aMJHlLNj1Aw)
 
-**URL:** PENDIENTE
+**Plataforma:** YouTube no listado.
 
-**Plataforma:** YouTube no listado o Google Drive con acceso abierto.
+**Fecha y duración:** 21/11/2026 con 11:59 minutos de duración.
 
-**Fecha y duración:** PENDIENTE.
-
-El ensayo debe mostrar rostro y voz de todos los integrantes. Antes de entregar, comprobar el acceso desde una sesión sin iniciar y la duración exigida para la actividad.
 
 ## Archivos de la entrega
 
